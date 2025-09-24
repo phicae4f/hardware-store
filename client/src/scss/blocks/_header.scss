@@ -1,0 +1,61 @@
+@use "../global/variables" as *;
+
+.header {
+    $root: &;
+
+
+    background-color: $color-turbo;
+    position: fixed;
+    left: 0;
+    right: 0;
+
+
+    &__wrapper {
+        padding: 12px 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__nav {
+        display: flex;
+        gap: 35px;
+        // margin-left: 30px;
+    }
+
+    &__nav-item {
+        font-size: 22px;
+        line-height: 12px;
+    }
+
+    &__user {
+        display: flex;
+        align-items: center;
+        width: 100px;
+        justify-content: flex-end;
+
+        &:hover, &:focus-visible {
+            #{$root}__btn, #{$root}__icon  {
+                color: red;
+                transition: color $transition-300;
+            }
+        }
+    }
+
+    &__btn {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 12px;
+        border: none;
+        background-color: transparent;
+        transition: color $transition-300;
+    }
+
+    &__icon {
+        width: 26px;
+        height: 26px;
+        color: $color-black;
+        transition: color $transition-300;
+    }
+}
