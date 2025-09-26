@@ -1,5 +1,7 @@
-import { TbToolsOff } from "react-icons/tb";
+
 import { GrLogin } from "react-icons/gr";
+import { GoTools } from "react-icons/go";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
     return (
@@ -7,7 +9,13 @@ export const Header = () => {
             <div className="container">
                 <div className="header__wrapper">
                     <div className="header__logo" aria-label="Логотип компании">
-                        <TbToolsOff size={60}/>
+                        <span className="header__logo-icon">
+                            <GoTools size={60}/>
+                        </span>
+                        <div className="header__logo-text">
+                        <span>БАРС-В</span>
+                        <span>Общество с Ограниченной Ответственностью</span>
+                        </div>
                     </div>
                     <ul className="header__nav">
                         <li className="header__nav-item">О нас</li>
@@ -16,10 +24,11 @@ export const Header = () => {
                         <li className="header__nav-item">Дизайн</li>
                         <li className="header__nav-item">Связаться с нами</li>
                     </ul>
-                    <div className="header__user">
-                        <button className="header__btn btn" type="button">Войти</button>
-                        <span className="header__icon"><GrLogin size={26}/></span>
-                    </div>
+                    <Link to="/login">
+                    <button className="header__btn btn" type="button" aria-label="Войти в аккаунт">
+                        <span className="header__btn-icon"><GrLogin size={30}/></span>
+                    </button>
+                    </Link>
                 </div>
             </div>
         </header>
