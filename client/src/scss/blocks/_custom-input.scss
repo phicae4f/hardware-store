@@ -1,3 +1,33 @@
+@use "../global/variables" as *;
+
 .custom-input {
-    
+  position: relative;
+  padding: 10px 20px 10px 30px;
+  display: flex;
+  gap: 5px;
+  border-bottom: 1px solid $color-suva-grey;
+
+  &__icon {
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+  }
+
+  &__field {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    user-select: none;
+    cursor: pointer;
+    width: 100%;
+    font-family: $ff-play;
+    font-size: 16px;
+    color: $color-dim-gray;
+
+    &::placeholder {
+      font-family: $ff-play;
+      font-size: 16px;
+      color: $color-suva-grey;
+    }
+  }
 }
