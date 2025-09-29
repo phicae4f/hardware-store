@@ -15,7 +15,7 @@ export async function createTables() {
             id INT PRIMARY KEY AUTO_INCREMENT,
             login VARCHAR(50) UNIQUE NOT NULL,
             password_hash VARCHAR(255) NOT NULL,
-            role ENUM('admin') DEFAULT 'admin',
+            role ENUM('admin', 'user') DEFAULT 'user',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )`
         )
