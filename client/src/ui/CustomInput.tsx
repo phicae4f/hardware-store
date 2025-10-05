@@ -1,13 +1,12 @@
+import type { InputHTMLAttributes } from "react";
 import { FaLock, FaUser } from "react-icons/fa";
 
-interface CustomInputProps {
-  type: string;
-  name: string;
-  id: string;
-  placeholder: string;
+interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  
 }
 
 export const CustomInput = (props: CustomInputProps) => {
+  const {type, name, ...inputProps} = props
   return (
     <div className="custom-input">
       <span className="custom-input__icon">
@@ -15,10 +14,9 @@ export const CustomInput = (props: CustomInputProps) => {
       </span>
       <input
         className="custom-input__field"
-        type={props.type}
-        name={props.name}
-        id={props.id}
-        placeholder={props.placeholder}
+        type={type}
+        name={name}
+        {...inputProps}
       />
     </div>
   );

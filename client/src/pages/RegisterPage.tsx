@@ -4,7 +4,7 @@ export const RegisterPage = () => {
     return (
         <section>
             <div className="container">
-                <AuthCard title="Регистрация" btnText="Зарегистрироваться"/>
+                <AuthCard title="Регистрация" btnText="Зарегистрироваться" isLogin={false}/>
             </div>
         </section>
     )

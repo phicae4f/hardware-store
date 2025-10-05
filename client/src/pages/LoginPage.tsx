@@ -4,7 +4,7 @@ export const LoginPage = () => {
     return (
         <section>
             <div className="container">
-                <AuthCard title="Авторизация" btnText="Войти"/>
+                <AuthCard title="Авторизация" btnText="Войти" isLogin/>
             </div>
         </section>
     )
