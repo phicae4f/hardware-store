@@ -39,7 +39,6 @@ export const Header = () => {
                 </span>
               </button>
           </Link>)}
-          
         </div>
       </div>
     </header>

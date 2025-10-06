@@ -1,5 +1,9 @@
+import { ContactUs } from "../components/ContactUs"
+
 export const MainPage = () => {
     return (
-        <>MainPage</>
+        <>
+        <ContactUs />
+        </>
     )
 }
