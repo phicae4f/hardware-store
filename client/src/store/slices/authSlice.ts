@@ -13,7 +13,7 @@ interface AuthState {
 
 
 const initialState: AuthState = {
-    user: null,
+    user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null,
     token: localStorage.getItem("token"),
     isLoading: false,
     error: null,
@@ -67,6 +67,7 @@ const authSlice = createSlice({
             state.user = null
             state.token = null
             localStorage.removeItem("token")
+            localStorage.removeItem("user")
         },
         clearError: (state) => {
             state.error = null
@@ -84,6 +85,7 @@ const authSlice = createSlice({
             state.user = action.payload.data.user
             state.token = action.payload.data.token
             localStorage.setItem("token", action.payload.data.token)
+            localStorage.setItem("user", JSON.stringify(action.payload.data.user))
         })
         .addCase(loginUser.rejected, (state, action) => {
             state.isLoading = false
@@ -99,6 +101,8 @@ const authSlice = createSlice({
             state.user = action.payload.data.user
             state.token = action.payload.data.token
             localStorage.setItem("token", action.payload.data.token)
+            localStorage.setItem("user", JSON.stringify(action.payload.data.user))
+
         })
         .addCase(registerUser.rejected, (state, action) => {
             state.isLoading = false

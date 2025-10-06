@@ -3,6 +3,7 @@ import { GoTools } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux";
 
+
 export const Header = () => {
   const { user } = useAppSelector((state) => state.auth);
   return (
@@ -26,7 +27,7 @@ export const Header = () => {
             <li className="header__nav-item">Связаться с нами</li>
           </ul>
           {user ? (
-              user.login
+              <span className="header__user-nickname">{user.login}</span>
             ): (<Link to="/login">
               <button
                 className="header__btn btn"

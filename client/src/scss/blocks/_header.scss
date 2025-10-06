@@ -89,4 +89,10 @@
         color: $color-suva-grey;
         transition: color $transition-300;
     }
+
+    &__user-nickname {
+        color: $color-turbo;
+        font-size: 20px;
+    }
+
 }
