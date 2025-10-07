@@ -1,7 +1,120 @@
 @use "../global/variables" as *;
-.contact-us {
 
-    width: 700px;
-    height: 700px;
-    background-color: red;
+.contact-us {
+    margin: 0 auto;
+    padding-top: 188px;
+    $root: &;
+
+    &__wrapper {
+        position: relative;
+        padding: 70px 120px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        background-color: $color-white;
+        min-height: 500px;
+        border-radius: 5px;
+        box-shadow: 1px 1px 32px 1px $color-silver;
+        
+
+        &::after {
+            position: absolute;
+            content: "";
+            width: 25%;
+            top: 0;
+            right: 0;
+            height: 100%;
+            background-color: $color-moon-yellow;
+            border-radius: 0 5px 5px 0;
+
+        }
+    }
+
+    &__icon {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: 32px;
+        color: $color-dim-gray;
+    }
+
+    &__text {
+        margin: 0 0 30px;
+        font-size: 26px;
+        color: $color-dim-gray;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        width: 40%;
+    }
+
+    &__info {
+        padding: 40px;
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0;
+        content: "";
+        background-color: $color-black;
+        width: 40%;
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 30px;
+
+        &::after {
+            position: absolute;
+            content: "";
+            width: 50px;
+            height: 50px;
+            background-color: $color-moon-yellow;
+            top: -20px;
+            left: -20px;
+        }
+    }
+
+    &__info-title {
+        color: $color-white;
+        margin: 0;
+        font-weight: 300;
+    }
+
+    &__list  {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 20px;
+        &:hover {
+            #{$root}__item-text,  #{$root}__item-link,  #{$root}__item-icon {
+                color: $color-white;
+            }
+        }
+    }
+
+    &__item-text, &__item-link, &__item-icon {
+        display: flex;
+        color: $color-silver;
+        transition: color $transition-300;
+    }
+
+    &__item-link {
+        cursor: pointer;
+    }
 }
