@@ -1,5 +1,31 @@
 @use "../global/variables" as *;
 
 .custom-textarea {
+    width: 250px;
+    position: relative;
+    
+    &__field {
+        width: 100%;
+        outline: none;
+        resize: none;
+        border: 1px solid $color-silver;
+        padding: 10px 10px 10px 40px;
+        border-radius: 5px;
+        transition: border $transition-300;
 
+        &::placeholder {
+            font-family: $ff-play;
+            color: $color-silver;
+        }
+
+        &:focus, &:focus-visible, &:hover {
+        border: 1px solid $color-dim-gray;
+    }
+    }
+
+    &__icon {
+        top: 10px;
+        left: 10px;
+        position: absolute;
+    }
 }

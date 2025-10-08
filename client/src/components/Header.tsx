@@ -22,7 +22,7 @@ export const Header = () => {
           <ul className="header__nav">
             <li className="header__nav-item">О нас</li>
             <li className="header__nav-item">Ремонт</li>
-            <li className="header__nav-item">Постройка</li>
+            <li className="header__nav-item">Строительство</li>
             <li className="header__nav-item">Дизайн</li>
             <li className="header__nav-item">Связаться с нами</li>
           </ul>

@@ -20,6 +20,7 @@ export const ContactUs = () => {
                         <CustomInput type="tel" placeholder="Телефон" name="tel"/>
                         <CustomSelect/>
                         <CustomTextArea placeholder="Опишите вопрос (необязательно)"/>
+                        <button className="contact-us__btn" type="button">Отправить</button>
                     </form>
                     <div className="contact-us__info">
                         <h2 className="contact-us__info-title">Информация о&nbsp;нас</h2>

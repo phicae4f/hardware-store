@@ -9,7 +9,7 @@ export const CustomTextArea = (props: CustomTextAreaProps) => {
         <div className="custom-textarea">
             <textarea className="custom-textarea__field" name="textarea" placeholder={props.placeholder}>
             </textarea>
-            <span className="custom-textarea__icon"><MdOutlineDriveFileRenameOutline/></span>
+            <span className="custom-textarea__icon"><MdOutlineDriveFileRenameOutline size={21}/></span>
         </div>
     )
 }
