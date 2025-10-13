@@ -1,7 +1,13 @@
+import type { SelectHTMLAttributes } from "react"
 
-export const CustomSelect = () => {
+interface CustomSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+  
+}
+
+export const CustomSelect = (props: CustomSelectProps) => {
+    const {...selectProps} = props
     return (
-    <select className="custom-select" name="service_type" required>
+    <select className="custom-select" name="service_type" required {...selectProps}>
         <option className="custom-select__title" value=""> Выберите тип услуги</option>
         
         <optgroup label="Ремонт">

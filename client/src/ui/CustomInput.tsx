@@ -16,11 +16,12 @@ export const CustomInput = (props: CustomInputProps) => {
         return <FaUser size={21} /> 
       case "password":
         return <FaLock size={21} />
-      case "username":
+      case "client_name":
         return <FiUser size={21} /> 
       case "email":
         return <MdOutlineMailOutline size={21} />
       case "tel":
+      case "phone":
         return <MdOutlinePhone size={21}/>
       default:
         return <FaUser size={21} /> 

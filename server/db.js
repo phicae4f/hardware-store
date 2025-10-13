@@ -41,15 +41,27 @@ export async function createTables() {
         await db.execute(
             `CREATE TABLE IF NOT EXISTS applications  (
             id INT PRIMARY KEY AUTO_INCREMENT,
+            user_id INT NULL,
             client_name VARCHAR(100) NOT NULL,
             phone VARCHAR(20) NOT NULL,
             email VARCHAR(100),
-            message TEXT,
-            service_type ENUM('Ремонт', 'Постройка', 'Дизайн'),
+            note_message TEXT,
+            service_type ENUM(
+                'Ремонт квартиры', 
+                'Ремонт дома', 
+                'Ремонт офиса',
+                'Строительство дома',
+                'Строительство бани', 
+                'Строительство гаража',
+                'Дизайн интерьера',
+                'Консультация',
+                'Другое'
+            ) NOT NULL,
             status ENUM('Новая', 'В работе', 'Выполнена') DEFAULT 'Новая',
             admin_notes TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
             )`
         )
 

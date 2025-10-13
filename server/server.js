@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { createTables } from "./db.js";
 import { userRouter } from "./routes/user.js";
+import { applicationRouter } from "./routes/application.js";
 
 
 const PORT = process.env.PORT
@@ -17,6 +18,7 @@ app.use(express.json())
 createTables()
 
 app.use("/api/auth", userRouter)
+app.use("/api/applications", applicationRouter)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`)
