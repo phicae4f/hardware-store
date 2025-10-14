@@ -6,6 +6,16 @@ import { useAppSelector } from "../hooks/redux";
 
 export const Header = () => {
   const { user } = useAppSelector((state) => state.auth);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if(element) {
+      element.scrollIntoView({
+        block: "start"
+      })
+    }
+  }
+
   return (
     <header className="header">
       <div className="container">
@@ -20,11 +30,11 @@ export const Header = () => {
             </div>
           </div>
           <ul className="header__nav">
-            <li className="header__nav-item">О нас</li>
+            <li className="header__nav-item" onClick={() => scrollToSection("about-us")}>О нас</li>
             <li className="header__nav-item">Ремонт</li>
             <li className="header__nav-item">Строительство</li>
             <li className="header__nav-item">Дизайн</li>
-            <li className="header__nav-item">Связаться с нами</li>
+            <li className="header__nav-item" onClick={() => scrollToSection("contact-us")}>Связаться с нами</li>
           </ul>
           {user ? (
               <span className="header__user-nickname">{user.login}</span>

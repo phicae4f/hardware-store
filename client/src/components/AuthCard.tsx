@@ -1,9 +1,10 @@
 import { PiCat } from "react-icons/pi";
 import { CustomInput } from "../ui/CustomInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { loginUser, registerUser } from "../store/slices/authSlice";
+import { useEffect } from "react";
 
 
 interface AuthCard {
@@ -22,7 +23,14 @@ export const AuthCard = (props: AuthCard) => {
   
   const {register, handleSubmit, formState: {errors}} = useForm<AuthFormData>()
   const dispatch = useAppDispatch()
-  const {isLoading, error} = useAppSelector((state) => state.auth)
+  const navigate = useNavigate()
+  const {isLoading, error, user} = useAppSelector((state) => state.auth)
+
+  useEffect(() => {
+    if(user) {
+      navigate("/")
+    }
+  }, [user, navigate])
 
   const onSubmit = (data: AuthFormData) => {
     if(props.isLogin) {
@@ -37,7 +45,7 @@ export const AuthCard = (props: AuthCard) => {
   return (
     <div className="auth">
       <div className="auth__wrapper">
-        <h1 className="auth__title">{props.title}</h1>
+        <h2 className="auth__title">{props.title}</h2>
         <div className="auth__card">
           <div className="auth__card-left">
             <PiCat size={100} />

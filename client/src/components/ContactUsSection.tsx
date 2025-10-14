@@ -9,6 +9,7 @@ import { useState} from "react";
 import { useAppSelector } from "../hooks/redux";
 import { useForm } from "react-hook-form";
 
+
 interface FormData {
     client_name: string,
     phone: string,
@@ -17,7 +18,7 @@ interface FormData {
     service_type: string
 }
 
-export const ContactUs = () => {
+export const ContactUsSection = () => {
     const {user} = useAppSelector(state => state.auth)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [message, setMessage] = useState("")
@@ -66,11 +67,11 @@ export const ContactUs = () => {
     }
     
     return (
-        <section className="contact-us">
+        <section className="contact-us" id="contact-us">
             <div className="container">
                 <div className="contact-us__wrapper">
                     <span className="contact-us__icon"><PiCat size={36}/></span>
-                    <h1 className="contact-us__title">Оставьте заявку &mdash;</h1>
+                    <h2 className="contact-us__title">Оставьте заявку &mdash;</h2>
                     <p className="contact-us__text">cвяжемся с&nbsp;Вами в&nbsp;ближайшее время!</p>
                     <form  className="contact-us__form" onSubmit={handleSubmit(onSubmit)}>
                         <div className="contact-us__field">

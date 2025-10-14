@@ -1,0 +1,92 @@
+@use "../global/variables" as *;
+
+.hero {
+    padding-top: 88px;
+    background: url(/hero.jpg) no-repeat center center;
+    background-size: cover;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    &::before {
+        position: absolute;
+        content: "";
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: $color-black-70;
+    }
+
+    &__wrapper {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: 1200px;
+        gap: 20px;
+    }
+
+    &__title {
+        display: flex;
+        flex-direction: column;
+        font-size: 80px;
+        color: $color-white;
+        margin: 0;
+
+        &--highlight {
+            color: $color-turbo;
+        }
+    }
+
+    &__text {
+        margin: 0 0 30px;
+        color: $color-silver;
+        font-size: 32px;
+    }
+
+    &__links {
+        display: flex;
+        justify-content: flex-start;
+        gap: 20px;
+    }
+
+    &__link {
+        width: auto;
+        min-width: 215px;
+        height: 55px;
+        border: 1px solid $color-white;
+        color: $color-white;
+        padding: 7px 12px;
+        border-radius: 5px;
+        font-size: 22px;
+        font-family: $ff-play;
+        background-color: transparent;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: color $transition-300, background-color $transition-300, border $transition-300,;
+
+         &--color {
+            background-color: $color-turbo;
+            border: 1px solid $color-turbo;
+            color: $color-black;
+
+            &:hover, &:focus-visible {
+            border: 1px solid $color-white;
+            color: $color-white;
+            background-color: transparent;
+        }
+            
+        }
+
+        &:hover, &:focus-visible {
+            border: 1px solid $color-turbo;
+            color: $color-turbo;
+        }
+    }
+}

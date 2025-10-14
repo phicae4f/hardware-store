@@ -1,9 +1,13 @@
-import { ContactUs } from "../components/ContactUs"
+import { AboutUsSection } from "../components/AboutUsSection"
+import { ContactUsSection } from "../components/ContactUsSection"
+import { HeroSection } from "../components/HeroSection"
 
 export const MainPage = () => {
     return (
         <>
-        <ContactUs />
+        <HeroSection />
+        <AboutUsSection />
+        <ContactUsSection />
         </>
     )
 }
