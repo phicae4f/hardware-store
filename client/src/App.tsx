@@ -14,7 +14,7 @@ function App() {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
 
-        {/* <Route path='/profile' element={<ProtectedRoute>
+        {/* <Route path='/my-applications' element={<ProtectedRoute requiredRole="user">
           <ProfilePage/>
         </ProtectedRoute>}/> */}
       </Routes>

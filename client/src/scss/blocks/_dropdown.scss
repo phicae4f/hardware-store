@@ -1,0 +1,90 @@
+@use "../global/variables" as *;
+
+.dropdown {
+    position: relative;
+    $root: &;
+
+    &__button {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        font-family: $ff-play;
+        width: auto;
+        padding: 2px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    &__username {
+        color: $color-turbo;
+        font-size: 20px;
+    }
+
+    &__arrow {
+        color: $color-turbo;
+        transition: transform $transition-300;
+
+        &.open {
+            transform: rotate(180deg);
+        }
+    }
+
+    &__menu {
+        transform: translateY(-10px);
+        opacity: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        right: -50px;
+        position: absolute;
+        background-color: $color-silver;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px $color-black-10;
+        min-width: 200px;
+        z-index: 1000;
+        overflow: hidden;
+        transition: transform $transition-300, opacity $transition-300, visibility $transition-300, pointer-events $transition-300;
+        visibility: hidden;
+        pointer-events: none;
+
+        &.open {
+            transform: translateY(20px);
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+    }
+
+    &__item {
+        padding: 10px 20px;
+        font-size: 18px;
+        color: $color-nero;
+        width: 100%;
+        transition: background-color $transition-300;
+        
+
+        &:hover, &:focus-visible {
+            background-color: $color-white-smoke;
+        }
+    }
+
+    &__logout {
+        width: 100%;
+        background-color: transparent;
+        border: none;
+        font-family: $ff-play;
+        font-size: 18px;
+        color: $color-nero;
+        cursor: pointer;
+        padding: 10px 20px;
+        transition: background-color $transition-300;
+        display: flex;
+        justify-content: flex-start;
+        &:hover, &:focus-visible {
+            background-color: $color-white-smoke;
+        }
+    }
+}

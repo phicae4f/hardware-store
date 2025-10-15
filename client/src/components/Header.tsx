@@ -2,6 +2,7 @@ import { GrLogin } from "react-icons/gr";
 import { GoTools } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux";
+import { DropDown } from "./Dropdown";
 
 
 export const Header = () => {
@@ -37,7 +38,8 @@ export const Header = () => {
             <li className="header__nav-item" onClick={() => scrollToSection("contact-us")}>Связаться с нами</li>
           </ul>
           {user ? (
-              <span className="header__user-nickname">{user.login}</span>
+            <DropDown />
+              // <span className="header__user-nickname">{user.login}</span>
             ): (<Link to="/login">
               <button
                 className="header__btn btn"
