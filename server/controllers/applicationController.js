@@ -59,5 +59,39 @@ export const applicationController= {
                 message: "Ошибка при отправке заявки"
             })
         }
+    },
+
+    async getUserApplications(req, res) {
+        try {
+            const userId = req.user.userId
+            const [applications] = await db.execute(`
+                SELECT
+                    a.id,
+                    a.client_name,
+                    a.phone,
+                    a.email,
+                    a.note_message,
+                    a.service_type,
+                    a.status,
+                    a.created_at,
+                    a.updated_at,
+                    u.login as user_login
+                FROM applications a
+                LEFT JOIN users u ON a.user_id = u.id
+                WHERE a.user_id = ?
+                ORDER BY a.created_at DESC
+                `, [userId])
+
+                res.json({
+                    success: true,
+                    data: applications
+                })
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({
+                success: false,
+                message: "Ошибка просмотра заявок"
+            })
+        }
     }
 }
