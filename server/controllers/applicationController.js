@@ -31,7 +31,7 @@ export const applicationController= {
                     message: "Неверный тип услуги"
                 })
             }
-            const userId = req.user?.userId || null
+            const userId = req.user ? (req.user.userId || req.user.id) : null
 
             const [result] = await db.execute(
                 `
@@ -65,7 +65,7 @@ export const applicationController= {
 
     async getUserApplications(req, res) {
         try {
-            const userId = req.user.userId
+            const userId = req.user ? (req.user.userId || req.user.id) : null
             const [applications] = await db.execute(`
                 SELECT
                     a.id,

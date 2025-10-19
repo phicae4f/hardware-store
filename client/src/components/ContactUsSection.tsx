@@ -37,11 +37,16 @@ export const ContactUsSection = () => {
         setMessage("")
 
         try {
+            const token = localStorage.getItem("token")
+            const headers: HeadersInit = {
+                "Content-Type": "application/json"
+            }
+            if(token) {
+                headers["Authorization"] = `Bearer ${token}`
+            }
             const response = await fetch(`${import.meta.env.VITE_API_URL}/applications`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: headers,
                 body: JSON.stringify(data)
             })
 

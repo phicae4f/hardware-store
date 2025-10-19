@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import type { RootState } from "../store"
 
 interface Application {
-    id: string,
+    id: number,
     client_name: string,
     phone: string,
     email: string | null,
@@ -28,8 +29,12 @@ export const fetchUserApplications = createAsyncThunk(
     "applications/fetchUserApplications",
     async(_, {getState, rejectWithValue}) => {
         try {
-            const {auth} = getState() as any // функция, которая возвращает ВСЕ состояние Redux
+            const {auth} = getState() as RootState // функция, которая возвращает ВСЕ состояние Redux
             const token = auth.token
+            const user = auth.user
+            console.log('🔄 fetchUserApplications - User:', user)
+            console.log('🔄 fetchUserApplications - Token:', token ? 'present' : 'missing')
+
 
             if(!token) {
                 throw new Error("Отсутствует токен")

@@ -4,9 +4,10 @@ import { useEffect } from "react"
 import { fetchUserApplications } from "../store/slices/applicationsSlice"
 import { useNavigate } from "react-router-dom"
 import { scrollToSection } from "../utils/scrollToSection"
+import { type AppDispatch } from "../store/store"
 
 export const MyApplications = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const {applications, isLoading, error} = useAppSelector(state => state.applications)
     const {user} = useAppSelector(state => state.auth)
 
