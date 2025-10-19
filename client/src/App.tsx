@@ -5,6 +5,7 @@ import { Layout } from './components/Layout'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { MyApplications } from './pages/MyApplications'
 
 function App() {
   return (
@@ -14,9 +15,9 @@ function App() {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
 
-        {/* <Route path='/my-applications' element={<ProtectedRoute requiredRole="user">
-          <ProfilePage/>
-        </ProtectedRoute>}/> */}
+        <Route path='/my-applications' element={<ProtectedRoute requiredRole="user">
+          <Layout><MyApplications /></Layout>
+        </ProtectedRoute>}/>
       </Routes>
     </BrowserRouter>
   )

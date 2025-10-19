@@ -31,12 +31,14 @@ export const applicationController= {
                     message: "Неверный тип услуги"
                 })
             }
+            const userId = req.user?.userId || null
+
             const [result] = await db.execute(
                 `
                 INSERT INTO applications (user_id, client_name, phone, email, note_message, service_type)
                 VALUES (?, ?, ?, ?, ?, ?)
                 `,
-                [req.user?.userId || null,
+                [   userId,
                     client_name,
                     phone,
                     email,
