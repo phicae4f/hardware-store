@@ -17,7 +17,7 @@ export const MyApplications = () => {
         navigate("/")
         setTimeout(() => {
             scrollToSection("contact-us")
-        }, 100)
+        }, 200)
     }
 
     useEffect(() => {

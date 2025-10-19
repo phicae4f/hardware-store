@@ -31,10 +31,6 @@ export const fetchUserApplications = createAsyncThunk(
         try {
             const {auth} = getState() as RootState // функция, которая возвращает ВСЕ состояние Redux
             const token = auth.token
-            const user = auth.user
-            console.log('🔄 fetchUserApplications - User:', user)
-            console.log('🔄 fetchUserApplications - Token:', token ? 'present' : 'missing')
-
 
             if(!token) {
                 throw new Error("Отсутствует токен")
