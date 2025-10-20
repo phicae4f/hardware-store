@@ -95,5 +95,37 @@ export const applicationController= {
                 message: "Ошибка просмотра заявок"
             })
         }
+    },
+
+    async getAllApplications (req, res)  {
+        try {
+            const [applications] = await db.execute(`
+                SELECT
+                a.id,
+                a.client_name,
+                a.phone,
+                a.email,
+                a.note_message,
+                a.service_type,
+                a.status,
+                a.created_at,
+                a.updated_at,
+                u.login as user_login,
+                u.id as user_id
+            FROM applications a
+            LEFT JOIN users u ON a.user_id = u.id
+            ORDER BY a.created_at DESC
+                `)
+
+            res.json({
+                success: true,
+                data: applications
+            })
+        } catch(error) {
+            res.status(500).json({
+                success: false,
+                message: "Не удалось загрузить заявки"
+            })
+        }
     }
 }

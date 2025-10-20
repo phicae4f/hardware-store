@@ -6,3 +6,4 @@ export const applicationRouter = Router()
 
 applicationRouter.post("/",  authenticate, applicationController.createApplication)
 applicationRouter.get("/my-applications", authenticate, applicationController.getUserApplications)
+applicationRouter.get("/all", authenticate, applicationController.getAllApplications)

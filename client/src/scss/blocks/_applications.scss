@@ -78,6 +78,7 @@
         background-color: $color-white-80;
         border-radius: 10px;
 
+
         & thead tr {
             display: grid;
             grid-template-columns: repeat(5, 250px);
@@ -100,6 +101,16 @@
                 background-color: $color-vis-vis;
             }
             
+        }
+
+        &--admin {
+            & thead tr {
+                grid-template-columns: repeat(9, auto)
+            }
+
+            & tbody tr {
+                grid-template-columns: repeat(9, auto);
+            }
         }
 
         & tbody td {
