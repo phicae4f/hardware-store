@@ -29,6 +29,7 @@ export const Header = () => {
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
+          <Link to="/">
           <div className="header__logo" aria-label="Логотип компании">
             <span className="header__logo-icon">
               <GoTools size={60} />
@@ -38,6 +39,8 @@ export const Header = () => {
               <span>Общество с Ограниченной Ответственностью</span>
             </div>
           </div>
+          </Link>
+          
           <ul className="header__nav">
             <li className="header__nav-item" onClick={() => handleNavigation("about-us")}>О нас</li>
             <li className="header__nav-item">Ремонт</li>

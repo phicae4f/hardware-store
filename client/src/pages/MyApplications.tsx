@@ -5,6 +5,7 @@ import { fetchUserApplications } from "../store/slices/applicationsSlice"
 import { useNavigate } from "react-router-dom"
 import { scrollToSection } from "../utils/scrollToSection"
 import { type AppDispatch } from "../store/store"
+import { formatDate } from "../utils/fornatDate"
 
 export const MyApplications = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -45,7 +46,7 @@ export const MyApplications = () => {
 
                 {applications.length === 0 ? (
                     <div className="applications__empty">
-                        <p className="applications__empty-text">У Вас пока нет заявок</p>
+                        <p className="applications__empty-text">У Вас пока нет заявок...</p>
                         <button className="applications__empty-link" type="button" onClick={handleNavigate}>Оставить первую заявку</button>
                     </div>
                 ): (
@@ -55,7 +56,8 @@ export const MyApplications = () => {
                             <th>ID</th>
                             <th>Тип услуги</th>
                             <th>Статус</th>
-                            <th>ДАта создания</th>
+                            <th>Сообщение</th>
+                            <th>Дата создания</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,7 +66,8 @@ export const MyApplications = () => {
                             <td>{application.id}</td>
                             <td>{application.service_type}</td>
                             <td>{application.status}</td>
-                            <td>{application.created_at}</td>
+                            <td data-full-text={application.note_message}>{application.note_message}</td>
+                            <td>{formatDate(application.created_at)}</td>
                         </tr>
                         ))}
                     </tbody>
