@@ -38,7 +38,6 @@ export const AllApplications = () => {
                             <thead>
                                 <tr>
                                      <th>ID</th>
-                                    <th>Пользователь</th>
                                     <th>Имя клиента</th>
                                     <th>Телефон</th>
                                     <th>Email</th>
@@ -57,7 +56,9 @@ export const AllApplications = () => {
                                     <td>{application.email}</td>
                                     <td>{application.service_type}</td>
                                     <td>{application.status}</td>
-                                    <td data-full-text={application.note_message}>{application.note_message}</td>
+                                    <td title={application.note_message || ""}>
+                                        {application.note_message}
+                                    </td>
                                     <td>{formatDate(application.created_at)}</td>
                                 </tr>
                                 ))}
