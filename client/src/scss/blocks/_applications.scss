@@ -99,69 +99,17 @@
 
       &:hover {
         background-color: $color-vis-vis;
-      }
-    }
 
-    &--admin {
-      & thead tr {
-        grid-template-columns: repeat(8, 154px);
-      }
-
-      & tbody tr {
-        grid-template-columns: repeat(8, 154px);
-      }
-
-      & tbody td:not(:nth-child(5)) {
-        position: relative;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        display: block;
-      }
-
-      // КРАСИВЫЙ ТУЛТИП
-      & tbody td:nth-child(7) {
-        position: relative;
-        cursor: help;
-
-        &:hover::before {
-          content: attr(data-tooltip);
-          position: absolute;
-          top: -10px;
-          left: 0; // ← ЛЕВЕЕ
-          transform: translateY(-100%);
-          background: $color-nero;
-          color: $color-white;
-          padding: 12px 16px; // ← ВЫШЕ (больше padding-top/bottom)
-          border-radius: 8px;
-          white-space: normal;
-          width: 120px; // ← УЖЕ (было 250px)
-          min-height: 160px; // ← МИНИМАЛЬНАЯ ВЫСОТА
-          z-index: 1000;
-          font-size: 14px;
-          line-height: 1.4; // ← МЕЖСТРОЧНЫЙ ИНТЕРВАЛ
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-        }
-
-        &:hover::after {
-          content: "";
-          position: absolute;
-          top: -4px; // ← ПОДСТРОИТЬ ПОД НОВУЮ ВЫСОТУ
-          left: 20px; // ← ЛЕВЕЕ
-          transform: translateY(-100%);
-          border: 6px solid transparent;
-          border-top-color: $color-nero;
-          z-index: 1001;
+        & > td {
+          color: $color-nero;
         }
       }
     }
 
     & tbody td {
       text-align: center;
+      color: $color-dim-gray;
+      transition: color $transition-300;
     }
 
     & tbody td {
@@ -171,5 +119,47 @@
       overflow: hidden;
       display: block;
     }
+
+    &--admin {
+      & thead tr {
+        grid-template-columns: repeat(9, 136px);
+      }
+
+      & tbody tr {
+        grid-template-columns: repeat(9, 136px);
+      }
+
+      & tbody td {
+        position: relative;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        display: block;
+
+        &:nth-child(5) {
+            white-space: normal;
+            overflow: visible;
+            text-overflow: unset;
+        }
+      }
+    }
   }
+
+  &__btn-edit {
+      background-color: transparent;
+      padding: 0;
+      border: none;
+      cursor: pointer;
+
+      svg {
+        color: $color-dim-gray;
+        transition: color $transition-300;
+      }
+
+      &:hover {
+        svg {
+          color: $color-nero;
+        }
+      }
+    }
 }

@@ -127,5 +127,68 @@ export const applicationController= {
                 message: "Не удалось загрузить заявки"
             })
         }
+    },
+    async updateApplication (req, res)  {
+        try {
+            const {id} = req.params
+            const {status, admin_notes} = req.body
+
+            const validStatuses = ['Новая', 'В работе', 'Выполнена']
+
+            if(status && !validStatuses.includes(status)) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Неверный статус"
+                })
+            }
+
+            const updateFields = []
+            const updateValues = []
+
+            if (status) {
+                updateFields.push('status = ?')
+                updateValues.push(status)
+            }
+
+            if(admin_notes !== undefined) {
+                updateFields.push('admin_notes = ?')
+                updateValues.push(admin_notes)
+            }
+
+            updateFields.push('updated_at = CURRENT_TIMESTAMP')
+            updateValues.push(id)
+
+            if(updateFields.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Нет данных для обновления"
+                })
+            }
+
+            const [result] = await db.execute(`
+                UPDATE applications SET ${updateFields.join(', ')} WHERE id = ?
+                `, updateValues
+            )
+
+            if(result.affectedRows === 0) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Заявка не найдена"
+                })
+            }
+
+            res.json({
+                success: true,
+                message: "Заявка обновлена"
+            })
+
+
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({
+                success:false,
+                message: "Ошибка обновления заявки"
+            })
+        }
     }
 }

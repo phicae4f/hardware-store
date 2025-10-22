@@ -10,6 +10,7 @@
 
 
 //BLOCKS
+@use "./blocks/tooltip";
 @use "./blocks/header";
 @use "./blocks/auth";
 @use "./blocks/custom-input";
@@ -20,6 +21,7 @@
 @use "./blocks/hero";
 @use "./blocks/dropdown";
 @use "./blocks/applications";
+@use "./blocks/modal";
 
 
 //VARIABLES

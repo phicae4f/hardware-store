@@ -1,0 +1,43 @@
+@use "../global/variables" as *;
+
+.tooltip {
+  position: relative;
+  cursor: pointer;
+
+  &__content {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    z-index: 1000;
+    background-color: $color-nero;
+    color: $color-white-50;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: normal;
+    width: 300px;
+    max-width: 400px;
+    text-align: left;
+    transition: opacity $transition-300;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 8px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 5px;
+      border-style: solid;
+      border-color: $color-nero transparent transparent transparent;
+    }
+  }
+
+  &:hover &__content {
+    visibility: visible;
+    opacity: 1;
+  }
+}
