@@ -16,9 +16,12 @@
         transform: translate(-50%, -50%);
         display: flex;
         flex-direction: column;
+        gap: 20px;
         background-color: $color-white;
         padding: 15px 25px;
         border-radius: 10px;
+        max-height: 90vh;
+        width: 525px;
     }
 
     &__header {
@@ -28,16 +31,122 @@
     }
 
     &__title {
-        margin: 0;
+        margin: 0 0 10px;
         color: $color-nero;
+        font-weight: 300;
+        font-size: 30px;
     }
 
     &__close-btn {
-        position: absolute;
-        top: 5px;
-        right: 5px;
         background-color: transparent;
         border: none;
         cursor: pointer;
+    }
+
+    &__content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-start;
+        padding: 5px 10px 5px 2px;
+        width: 230px;
+        flex-shrink: 1;
+
+        &:last-child {
+            flex-direction: row;
+            width: 100%;
+        }
+    }
+
+    &__group-name {
+    }
+    
+    &__group-value {
+        width: 100%;
+        color: $color-dim-gray;
+        word-break: break-word;
+    }
+
+    &__select {
+            width: 100%;
+    font-family: $ff-play;
+    padding: 10px;
+    border: 1px solid $color-silver;
+    border-radius: 5px;
+    outline: none;
+    margin: 0;
+    color: $color-silver;
+    transition: color $transition-300, border $transition-300;
+
+    &:focus, &:focus-visible, &:hover {
+        color: $color-dim-gray;
+        border: 1px solid $color-dim-gray;
+    }
+    }
+
+    &__textarea {
+        width: 100%;
+        outline: none;
+        resize: none;
+        border: 1px solid $color-silver;
+        padding: 10px;
+        border-radius: 5px;
+        transition: border $transition-300;
+
+        &::placeholder {
+            font-family: $ff-play;
+            color: $color-silver;
+        }
+
+        &:focus, &:focus-visible, &:hover {
+        border: 1px solid $color-dim-gray;
+    }
+    }
+
+    &__footer {
+        display: flex;
+        gap: 15px;
+    }
+
+    &__btn {
+        width: auto;
+        min-width: 115px;
+        height: 30px;
+        border: 1px solid $color-nero;
+        color: $color-nero;
+        padding: 7px 12px;
+        border-radius: 5px;
+        font-size: 20px;
+        font-family: $ff-play;
+        background-color: transparent;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: color $transition-300, background-color $transition-300, border $transition-300,;
+
+         &--color {
+            background-color: $color-turbo;
+            border: 1px solid $color-turbo;
+            color: $color-black;
+
+            &:hover, &:focus-visible {
+            border: 1px solid $color-white;
+            color: $color-white;
+            background-color: transparent;
+        }
+            
+        }
+
+        &:hover, &:focus-visible {
+            border: 1px solid $color-turbo;
+            color: $color-turbo;
+        }
     }
 }

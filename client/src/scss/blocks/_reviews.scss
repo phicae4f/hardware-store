@@ -1,0 +1,77 @@
+@use "../global/variables" as *;
+
+.reviews {
+    padding: 190px 0 90px;
+    
+    &__wrapper {
+        position: relative;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 100px;
+        align-items: center;
+    }
+
+    &__icon {
+        position: absolute;
+        right: 230px;
+        top: -15px;
+    }
+
+    &__title {
+        font-weight: 300;
+        margin: 0;
+        font-size: 60px;
+        text-align: center;
+    }
+
+    &__list {
+        display: flex;
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+        justify-content: flex-start;
+        min-height: 236px;
+
+        background-color: $color-white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        max-width: 450px;
+        box-shadow: 1px 1px 32px 1px $color-silver;
+
+    }
+
+    &__stars {
+        display: flex;
+        gap: 10px;
+        margin: 0 auto 10px;
+    }
+
+    &__star {
+        color: $color-turbo;
+    }
+
+    &__text {
+        font-size: 18px;
+        line-height: 22px;
+        text-align: left;
+        color: $color-dim-gray;
+        margin: 0;
+    }
+
+    &__user {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 150px;
+        gap: 10px;
+        align-items: center;
+    }
+
+    &__username {
+        font-size: 20px;
+    }
+}

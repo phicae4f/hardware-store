@@ -108,6 +108,7 @@ export const applicationController= {
                 a.note_message,
                 a.service_type,
                 a.status,
+                a.admin_notes,
                 a.created_at,
                 a.updated_at,
                 u.login as user_login,
