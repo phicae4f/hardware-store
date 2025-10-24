@@ -4,6 +4,7 @@ import cors from "cors";
 import { createTables } from "./db.js";
 import { userRouter } from "./routes/user.js";
 import { applicationRouter } from "./routes/application.js";
+import { reviewsRouter } from "./routes/reviews.js";
 
 
 const PORT = process.env.PORT
@@ -19,6 +20,8 @@ createTables()
 
 app.use("/api/auth", userRouter)
 app.use("/api/applications", applicationRouter)
+app.use("/api/reviews", reviewsRouter)
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`)

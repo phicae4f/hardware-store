@@ -81,6 +81,12 @@ export const MyApplications = () => {
                       </Tooltip>
                     </td>
                     <td>{formatDate(application.created_at)}</td>
+                    <td>
+                      {application.status === "Выполнена" ? 
+                      (<button className="applications__review-btn" type="button">Оставить отзыв</button>)
+                      : <></>}
+                      
+                    </td>
                   </tr>
                 ))}
               </tbody>

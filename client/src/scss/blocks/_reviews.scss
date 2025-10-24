@@ -25,6 +25,34 @@
         text-align: center;
     }
 
+    &__carousel {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        width: 100%;
+        width: auto;
+    }
+
+    &__arrow {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: color $transition-300;
+
+        &:hover, &:focus-visible {
+            color: $color-turbo;
+        }
+    }
+
+    &__carousel-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+
     &__list {
         display: flex;
     }
@@ -40,7 +68,7 @@
         background-color: $color-white;
         padding: 15px 25px;
         border-radius: 10px;
-        max-width: 450px;
+        width: 650px;
         box-shadow: 1px 1px 32px 1px $color-silver;
 
     }
@@ -52,7 +80,11 @@
     }
 
     &__star {
-        color: $color-turbo;
+        color: $color-silver;
+
+        &--active {
+            color: $color-turbo;
+        }
     }
 
     &__text {
@@ -69,6 +101,27 @@
         max-width: 150px;
         gap: 10px;
         align-items: center;
+    }
+
+    &__indicators {
+        max-width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    &__indicator {
+        width: 20px;
+        height: 20px;
+        border-radius: 30%;
+        border: none;
+        background-color: $color-silver;
+        cursor: pointer;
+        transition: background-color $transition-300;
+
+        &--active, &:hover {
+            background-color: $color-turbo;
+        }
     }
 
     &__username {

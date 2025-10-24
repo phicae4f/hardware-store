@@ -65,6 +65,15 @@ export async function createTables() {
             )`
         )
 
+        await db.execute(
+            `CREATE TABLE IF NOT EXISTS reviews (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            service_type_id INT,
+            status_id,
+            created_at_id
+            )`
+        )
+
         console.log("All tables were created/checked")
     } catch(error) {
         console.log("Error during creating tables: ", error)

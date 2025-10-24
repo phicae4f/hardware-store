@@ -93,11 +93,6 @@ export const AllApplications = () => {
                       </Tooltip>
                     </td>
                     <td>{formatDate(application.created_at)}</td>
-                    {/* <td>
-                      <Tooltip content={application.admin_notes || "Нет комментария"}>
-                        {application.admin_notes ? "📝" : "-"}
-                      </Tooltip>
-                    </td> */}
                     <td>
                       <button className="applications__btn-edit" type="button" onClick={() => handleEditClick(application)}><LuPencilLine size={30}/></button>
                     </td>
