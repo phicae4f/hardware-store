@@ -68,9 +68,16 @@ export async function createTables() {
         await db.execute(
             `CREATE TABLE IF NOT EXISTS reviews (
             id INT PRIMARY KEY AUTO_INCREMENT,
-            service_type_id INT,
-            status_id,
-            created_at_id
+            application_id INT NOT NULL,
+            user_id INT NOT NULL,
+            client_name VARCHAR(100) NOT NULL,
+            rating TINYINT NOT NULL CHECK (rating >= 1 AND rating <= 5),
+            comment TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            FOREIGN KEY (application_id) REFERENCES applications(id) ON DELETE CASCADE,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            UNIQUE KEY unique_application_review (application_id)
             )`
         )
 
