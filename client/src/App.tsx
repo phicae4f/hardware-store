@@ -7,6 +7,8 @@ import { RegisterPage } from "./pages/RegisterPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { MyApplications } from "./pages/MyApplications";
 import { AllApplications } from "./pages/AllApplications";
+import { AllReviews } from "./pages/AllReviews";
+import { MyReviews } from "./pages/MyReviews";
 
 function App() {
   return (
@@ -33,6 +35,11 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/my-reviews" element={<ProtectedRoute requiredRole="user">
+          <Layout>
+            <MyReviews />
+          </Layout>
+        </ProtectedRoute>} />
         <Route
           path="/admin/applications"
           element={
@@ -43,6 +50,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/reviews"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <Layout>
+                <AllReviews />
+              </Layout>
+            </ProtectedRoute>
+          }
+         />
       </Routes>
     </BrowserRouter>
   );

@@ -1,12 +1,14 @@
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../hooks/redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchUserApplications } from "../store/slices/applicationsSlice";
 import { useNavigate } from "react-router-dom";
 import { scrollToSection } from "../utils/scrollToSection";
 import { type AppDispatch } from "../store/store";
 import { formatDate } from "../utils/fornatDate";
 import { Tooltip } from "../components/Tooltip";
+import { LeaveReviewModal } from "../components/LeaveReviewModal";
+import { createReview } from "../store/slices/reviewsSlice";
 
 export const MyApplications = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -14,8 +16,14 @@ export const MyApplications = () => {
     (state) => state.applications
   );
   const { user } = useAppSelector((state) => state.auth);
+  const {isLoading: reviewsLoading, error: reviewsError} = useAppSelector((state) => state.reviews)
 
   const navigate = useNavigate();
+
+  const [reviewModalOpen, setReviewModalOpen] = useState(false);
+  const [selectedApplication, setSelectedApplication] = useState<{
+    id: number;
+  } | null>(null);
 
   const handleNavigate = () => {
     navigate("/");
@@ -29,6 +37,35 @@ export const MyApplications = () => {
       dispatch(fetchUserApplications());
     }
   }, [user, dispatch]);
+
+  const handleReviewClick = (applicationId: number) => {
+    setSelectedApplication({id: applicationId})
+    setReviewModalOpen(true)
+  }
+
+  const handleReviewSubmit = async (clientName: string, rating: number, comment: string) => {
+    if(!selectedApplication) {
+      return
+    }
+
+    try {
+      await dispatch(createReview({
+        application_id: selectedApplication.id,
+        client_name: clientName,
+        rating,
+        comment
+      })).unwrap()
+      setReviewModalOpen(false)
+      setSelectedApplication(null)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleCloseModal = () => {
+    setReviewModalOpen(false)
+    setSelectedApplication(null)
+  }
 
   if (isLoading) {
     return <span className="loader">Загрузка...</span>;
@@ -82,10 +119,17 @@ export const MyApplications = () => {
                     </td>
                     <td>{formatDate(application.created_at)}</td>
                     <td>
-                      {application.status === "Выполнена" ? 
-                      (<button className="applications__review-btn" type="button">Оставить отзыв</button>)
-                      : <></>}
-                      
+                      {application.status === "Выполнена" ? (
+                        <button
+                          className="applications__review-btn"
+                          type="button"
+                          onClick={() => handleReviewClick(application.id)}
+                        >
+                          Оставить отзыв
+                        </button>
+                      ) : (
+                        <></>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -94,6 +138,14 @@ export const MyApplications = () => {
           )}
         </div>
       </div>
+      <LeaveReviewModal 
+        applicationId={selectedApplication?.id || 0}
+        isOpen={reviewModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={handleReviewSubmit}
+        isLoading={reviewsLoading}
+        error={reviewsError || ""}
+         />
     </section>
   );
 };

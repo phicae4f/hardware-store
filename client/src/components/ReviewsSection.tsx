@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaArrowCircleLeft, FaArrowCircleRight, FaArrowLeft, FaArrowRight, FaUserCircle } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaUserCircle } from "react-icons/fa";
 import { IoIosStarOutline } from "react-icons/io";
 import { RiChatSmileAiLine } from "react-icons/ri";
 

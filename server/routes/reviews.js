@@ -4,3 +4,5 @@ import { reviewsController } from "../controllers/reviewsController.js"
 
 export const reviewsRouter = Router()
 reviewsRouter.post("/", authenticate, reviewsController.createReview)
+reviewsRouter.get("/all", authenticate, reviewsController.fetchAllReviews)
+reviewsRouter.get("/my-reviews", authenticate, reviewsController.fetchUserReviews)

@@ -1,0 +1,163 @@
+@use "../global/variables" as *;
+
+.reviews-page {
+  padding-top: 190px;
+  background: linear-gradient(310deg, $color-vis-vis 0%, transparent 100%);
+  min-height: 100vh;
+
+  &__wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 90px;
+    align-items: flex-start;
+    background-color: $color-white-50;
+    padding: 20px 50px;
+    border-radius: 20px;
+    min-height: 60vh;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 60px;
+    font-weight: 300;
+    color: $color-nero;
+  }
+
+  &__error {
+    color: $color-persian-red;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 100px auto 0;
+    align-items: center;
+  }
+
+  &__empty-text {
+    margin: 0;
+    font-size: 30px;
+    color: $color-dim-gray;
+  }
+
+  &__empty-link {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    font-family: $ff-play;
+    font-size: 30px;
+    padding: 10px 20px;
+    color: $color-suva-grey;
+    cursor: pointer;
+    transition: color $transition-300;
+
+    &::after {
+      position: absolute;
+      content: "";
+      background-color: $color-suva-grey;
+      height: 2px;
+      width: 100%;
+      bottom: 5px;
+      left: 0;
+      transition: background-color $transition-300;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: $color-dim-gray;
+      &::after {
+        background-color: $color-dim-gray;
+      }
+    }
+  }
+
+  &__table {
+    width: 100%;
+    background-color: $color-white-80;
+    border-radius: 10px;
+
+    & thead tr {
+      display: grid;
+      grid-template-columns: 100px 100px 209px 100px 268px 209px 259px;
+      padding: 20px 0;
+      border-bottom: 1px solid $color-silver;
+    }
+
+    & thead td {
+      text-align: center;
+    }
+
+    & tbody tr {
+      display: grid;
+      grid-template-columns: 100px 100px 209px 100px 268px 209px 259px;
+      padding: 20px 0;
+      width: 100%;
+      transition: background-color $transition-300;
+
+      &:hover {
+        background-color: $color-vis-vis;
+
+        & > td {
+          color: $color-nero;
+        }
+      }
+    }
+
+    & tbody td {
+      text-align: center;
+      color: $color-dim-gray;
+      transition: color $transition-300;
+      word-break: break-word;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__btn {
+    width: auto;
+    background-color: transparent;
+    color: $color-moon-yellow;
+    border: 2px solid $color-moon-yellow;
+    font-weight: 900;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-family: $ff-play;
+    transition: color $transition-300, border $transition-300;
+    cursor: pointer;
+    height: 30px;
+
+    &--reject {
+      border: 2px solid $color-persian-red;
+      color: $color-persian-red;
+    }
+
+    &:hover, &:focus-visible {
+      border: 2px solid $color-nero;
+      color: $color-nero;
+    }
+  }
+
+
+//     &__review-btn {
+//       background-color: transparent;
+//       color: $color-moon-yellow;
+//       border: 2px solid $color-moon-yellow;
+//       font-weight: 900;
+//       border-radius: 5px;
+//       padding: 5px 10px;
+//       font-family: $ff-play;
+//       transition: color $transition-300, border $transition-300;
+//       cursor: pointer;
+
+//       &:hover, &:focus-visible {
+//         border: 2px solid $color-nero;
+//         color: $color-nero;
+//       }
+//     }
+}

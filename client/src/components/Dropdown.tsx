@@ -58,7 +58,7 @@ export const DropDown = () => {
                             <Link to="/admin/applications" className="dropdown__item" onClick={handleItemClick}>
                                 Все заявки
                             </Link>
-                            <Link to="/admin/review-moderation" className="dropdown__item" onClick={handleItemClick}>
+                            <Link to="/admin/reviews" className="dropdown__item" onClick={handleItemClick}>
                                 Модерация отзывов
                             </Link>
                         </>

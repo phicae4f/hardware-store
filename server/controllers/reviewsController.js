@@ -1,3 +1,4 @@
+import { application } from "express";
 import { db } from "../db.js";
 
 export const reviewsController = {
@@ -73,4 +74,65 @@ export const reviewsController = {
       });
     }
   },
+  async fetchUserReviews(req, res) {
+    try {
+      const userId = req.user ? (req.user.userId || req.user.id) : null
+      const [reviews] = await db.query(
+        `SELECT 
+          r.id,
+          r.application_id,
+          r.client_name,
+          r.rating,
+          r.comment,
+          r.created_at
+        FROM reviews r
+        JOIN applications a ON r.application_id = a.id
+        WHERE r.user_id = ?
+        ORDER BY r.created_at DESC
+          `,
+          [userId]
+      )
+
+      res.json({
+        success: true,
+        data: reviews
+      })
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Ошибка при получении отзывов"
+      })
+    }
+  },
+  async fetchAllReviews(req, res) {
+    try{
+      const [reviews] = await db.query(
+        `SELECT
+          r.id,
+          r.application_id,
+          r.user_id,
+          r.client_name,
+          r.rating,
+          r.comment,
+          r.created_at,
+          r.updated_at,
+          u.login as user_login
+        FROM reviews r
+        LEFT JOIN users u ON r.user_id = u.id
+        LEFT JOIN applications a ON r.application_id = a.id
+        ORDER BY r.created_at DESC
+        `
+      )
+      return res.json({
+        success: true,
+        data: reviews
+      })
+    }
+    catch(error) {
+      res.status(500).json({
+        success: false,
+        message: "Не удалось загрузить список отзывов"
+      })
+    }
+  }
 };
