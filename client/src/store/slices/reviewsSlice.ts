@@ -9,6 +9,7 @@ interface Review {
     rating: number,
     comment: string,
     created_at: string,
+    status: 'pending' | 'approved' | 'rejected'
 
 }
 
@@ -117,6 +118,94 @@ export const fetchAllReviews = createAsyncThunk(
     }
 )
 
+export const approveReview = createAsyncThunk(
+    "reviews/approveReview",
+    async(reviewId: number, {getState, rejectWithValue}) => {
+        try {
+            const state = getState() as RootState
+        const token = state.auth.token
+
+        if(!token) {
+            throw new Error("Отсутствует токен")
+        }
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/reviews/${reviewId}/approve`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        })
+
+        if(!response.ok) {
+            const errorData = await response.json()
+            throw new Error(errorData.message || "Ошибка одобрения отзыва")
+        }
+
+        const result = await response.json()
+        return {reviewId, message: result.message}
+        } catch (error: any) {
+            rejectWithValue(error.message || "Ошибка при одобрении отзыва")
+        }
+    }
+)
+
+export const rejectReview = createAsyncThunk(
+    "reviews/rejectReview",
+    async(reviewId: number, {getState, rejectWithValue}) => {
+        try {
+            const state = getState() as RootState
+            const token = state.auth.token
+
+            if(!token) {
+                throw new Error("Отсутствует токен")
+            }
+
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/reviews/${reviewId}/reject`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+
+            if(!response.ok) {
+                const errorData = await response.json()
+                throw new Error(errorData.message || "Ошибка одобрения отзыва")
+            }
+
+            const result = await response.json()
+            return {reviewId, message: result.message}
+            
+        } catch (error: any) {
+             rejectWithValue(error.message || "Ошибка при отклонении отзыва")
+        }
+    }
+)
+
+export const fetchApprovedReviews = createAsyncThunk(
+    "reviews/fetchApprovedReviews",
+    async(_, {getState, rejectWithValue}) => {
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/reviews/approved`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+
+            if(!response.ok) {
+                const errorData = await response.json()
+                throw new Error(errorData.message || "Ошибка одобрения отзыва")
+            }
+            const result = await response.json()
+            return result.data
+
+        } catch (error: any) {
+            rejectWithValue(error.message || "Ошибка при загрузке отзывов")
+        }
+    }
+)
+
 const reviewsSlice = createSlice({
     name: "reviews",
     initialState,
@@ -167,6 +256,51 @@ const reviewsSlice = createSlice({
                 state.reviews = action.payload
             })
             .addCase(fetchAllReviews.rejected, (state, action) => {
+                state.isLoading = false
+                state.error = action.payload as string
+            })
+        //APPROVE REVIEW
+            .addCase(approveReview.pending, (state) => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(approveReview.fulfilled, (state, action) => {
+                state.isLoading = false
+                const review = state.reviews.find(r => r.id === action.payload?.reviewId)
+                if(review) {
+                    review.status = 'approved'
+                }
+            })
+            .addCase(approveReview.rejected, (state, action) => {
+                state.isLoading = false
+                state.error = action.payload as string
+            })
+        //REJECT REVIEW
+            .addCase(rejectReview.pending, (state) => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(rejectReview.fulfilled, (state, action) => {
+                state.isLoading = false
+                const review = state.reviews.find(r => r.id === action.payload?.reviewId)
+                if(review) {
+                    review.status = 'rejected'
+                }
+            })
+            .addCase(rejectReview.rejected, (state, action) => {
+                state.isLoading = false
+                state.error = action.payload as string
+            })
+        //GET APPROVED REVIEWS
+            .addCase(fetchApprovedReviews.pending, (state) => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(fetchApprovedReviews.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.reviews = action.payload
+            })
+            .addCase(fetchApprovedReviews.rejected, (state, action) => {
                 state.isLoading = false
                 state.error = action.payload as string
             })

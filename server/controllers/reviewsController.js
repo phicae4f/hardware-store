@@ -83,6 +83,7 @@ export const reviewsController = {
           r.application_id,
           r.client_name,
           r.rating,
+          r.status,
           r.comment,
           r.created_at
         FROM reviews r
@@ -114,6 +115,7 @@ export const reviewsController = {
           r.client_name,
           r.rating,
           r.comment,
+          r.status,
           r.created_at,
           r.updated_at,
           u.login as user_login
@@ -132,6 +134,82 @@ export const reviewsController = {
       res.status(500).json({
         success: false,
         message: "Не удалось загрузить список отзывов"
+      })
+    }
+  },
+  async approveReview(req, res) {
+    try {
+      const {id} = req.params
+      const [result] = await db.query(`
+        UPDATE reviews SET status = "approved",
+        updated_at = CURRENT_TIMESTAMP WHERE
+        id = ?
+        `, [id])
+      if(result.affectedRows === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Отзыв не найден"
+        })
+      }
+      res.json({
+        success: true,
+        message: "Отзыв одобрен"
+      })
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Ошибка при одобрении отзыва"
+      })
+    }
+  },
+  async rejectReview(req, res) {
+    try {
+      const {id} = req.params
+      const [result] = await db.query(`
+        UPDATE reviews SET status = "rejected",
+        updated_at = CURRENT_TIMESTAMP WHERE
+        id = ?
+        `, [id])
+
+      if(result.affectedRows === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Отзыв не найден"
+        })
+      }
+      res.json({
+        success: true,
+        message: "Отзыв отклонен"
+      })
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Ошибка при отклонении отзыва"
+      })
+    }
+  },
+  async getApprovedReviews(req, res) {
+    try {
+      const [reviews] = await db.execute(
+        `SELECT 
+          r.id,
+          r.client_name,
+          r.rating,
+          r.comment,
+          r.created_at
+        FROM reviews r
+        WHERE r.status = "approved"
+        ORDER BY r.created_at DESC
+        `
+      )
+      res.json({
+        success: true,
+        data: reviews
+      })
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: "Ошибка при получении отзывов"
       })
     }
   }

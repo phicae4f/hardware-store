@@ -44,7 +44,7 @@ export const MyReviews = () => {
               </button>
                     </div>
                   ) : (
-                    <table className="reviews-page__table">
+                    <table className="reviews-page__table reviews-page__table--user">
                       <thead>
                         <tr>
                           <td>ID отзыва</td>
@@ -65,7 +65,13 @@ export const MyReviews = () => {
                             <td>{review.rating}</td>
                             <td>{review.comment}</td>
                             <td>{formatDate(review.created_at)}</td>
-                            <td>-</td>
+                            <td><span
+                          className={`reviews-page__status reviews-page__status--${review.status}`}
+                        >
+                          {review.status === "pending" && "На модерации"}
+                          {review.status === "approved" && "Одобрен"}
+                          {review.status === "rejected" && "Отклонен"}
+                        </span></td>
                           </tr>
                         ))}
                       </tbody>

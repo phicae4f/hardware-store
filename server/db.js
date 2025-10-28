@@ -73,6 +73,7 @@ export async function createTables() {
             client_name VARCHAR(100) NOT NULL,
             rating TINYINT NOT NULL CHECK (rating >= 1 AND rating <= 5),
             comment TEXT NOT NULL,
+            status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             FOREIGN KEY (application_id) REFERENCES applications(id) ON DELETE CASCADE,

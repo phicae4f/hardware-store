@@ -1,50 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowLeft, FaArrowRight, FaUserCircle } from "react-icons/fa";
 import { IoIosStarOutline } from "react-icons/io";
 import { RiChatSmileAiLine } from "react-icons/ri";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { fetchApprovedReviews } from "../store/slices/reviewsSlice";
 
-interface Review {
-  id: number,
-  text: string,
-  author: string,
-  rating: number
-}
+
 
 export const ReviewsSection = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0)
+  const dispatch = useAppDispatch()
+  const {reviews, isLoading} = useAppSelector((state) => state.reviews)
 
-  const mockReviews:Review[]  = [
-    {
-      id: 1,
-      text: "Московская область, г. о. Воскресенск, тер. Старая Промплощадка, зд. 3ВМосковская область, г. о. Воскресенск, тер. Старая Промплощадка, зд. 3ВМосковская область, г. о. Воскресенск, тер. Старая Промплощадка, зд. 3ВМосковская область, г. о. Воскресенск, тер. Старая Промплощадка, зд. 3В",
-      author: "Андрей",
-      rating: 5
-    },
-    {
-      id: 2,
-      text: "Московская область, г. о. Воскресенск, тер. Старая Промплощадка, зд. 3В",
-      author: "Андрей",
-      rating: 4
-    },
-    {
-      id: 3,
-      text: "Московская область, г. о. Воскресенск, тер. Старая Промплощадка, зд. 3В",
-      author: "Андрей",
-      rating: 3
-    }
-  ]
+  useEffect(() => {
+    dispatch(fetchApprovedReviews())
+  }, [dispatch])
+
 
   const nextReview = () => {
-    setCurrentIndex((prevIndex) => prevIndex === mockReviews.length - 1 ? 0 : prevIndex + 1)
+    if (reviews.length === 0) return;
+    setCurrentIndex((prevIndex) => prevIndex === reviews.length - 1 ? 0 : prevIndex + 1)
   }
 
   const prevReview = () => {
-    setCurrentIndex((prevIndex) => prevIndex === 0 ? mockReviews.length - 1 : prevIndex - 1)
+    if (reviews.length === 0) return;
+    setCurrentIndex((prevIndex) => prevIndex === 0 ? reviews.length - 1 : prevIndex - 1)
   }
 
-  const currentReview = mockReviews[currentIndex]
-
+  
   const renderStars = (rating: number) => {
     return Array.from({length: 5}, (_, index) => (
       <span className={`reviews__star ${index < rating ? "reviews__star--active": ""}`} key={index}>
@@ -52,6 +36,28 @@ export const ReviewsSection = () => {
       </span>
     ))
   }
+  
+  if (isLoading) {
+    return <div className="loader">Загрузка отзывов...</div>;
+  }
+  
+  if (!reviews || reviews.length === 0) {
+  return (
+    <section className="reviews">
+      <div className="container">
+        <div className="reviews__wrapper">
+          <span className="reviews__icon">
+            <RiChatSmileAiLine size={60} />
+          </span>
+          <h2 className="reviews__title">Отзывы наших клиентов</h2>
+          <p className="reviews__empty">Пока нет отзывов</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+  const currentReview = reviews[currentIndex]
 
   return (
     <section className="reviews">
@@ -71,18 +77,18 @@ export const ReviewsSection = () => {
                   {renderStars(currentReview.rating)}
                 </div>
                 <p className="reviews__text">
-                  {currentReview.text}
+                  {currentReview.comment}
                 </p>
                 <div className="reviews__user">
                   <span className="reviews__user-icon">
                     <FaUserCircle size={40}/>
                   </span>
-                  <span className="reviews__username">{currentReview.author}</span>
+                  <span className="reviews__username">{currentReview.client_name}</span>
                 </div>
               </li>
             </ul>
             <div className="reviews__indicators">
-              {mockReviews.map((_, index) => (
+              {reviews.map((_, index) => (
                 <button className={`reviews__indicator ${index === currentIndex ? "reviews__indicator--active" : ""}`} key={index} onClick={() => setCurrentIndex(index)} type="button" aria-label={`Перейти к отзыву ${index + 1}`}/>
               ))}
             </div>

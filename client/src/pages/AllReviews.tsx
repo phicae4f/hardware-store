@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { fetchAllReviews } from "../store/slices/reviewsSlice";
+import {
+  approveReview,
+  fetchAllReviews,
+  rejectReview,
+} from "../store/slices/reviewsSlice";
 import { formatDate } from "../utils/fornatDate";
 
 export const AllReviews = () => {
@@ -14,10 +18,17 @@ export const AllReviews = () => {
     dispatch(fetchAllReviews());
   }, [dispatch]);
 
-   useEffect(() => {
-    console.log('📊 Reviews state:', { reviews, isLoading, error });
-  }, [reviews, isLoading, error]);
+  const handleApprove = (reviewId: number) => {
+    dispatch(approveReview(reviewId));
+  };
 
+  const handleReject = (reviewId: number) => {
+    dispatch(rejectReview(reviewId));
+  };
+
+  if (isLoading) {
+    return <div className="loader">Загрузка...</div>;
+  }
 
   return (
     <section className="reviews-page">
@@ -37,26 +48,51 @@ export const AllReviews = () => {
                   <td>Имя клиента</td>
                   <td>Рейтинг</td>
                   <td>Комментарий</td>
+                  <td>Статус</td>
                   <td>Дата создания</td>
                 </tr>
               </thead>
               <tbody>
-                {reviews && reviews.map((review) => (
-                  <tr>
-                    <td>{review.id}</td>
-                    <td>{review.application_id}</td>
-                    <td>{review.client_name}</td>
-                    <td>{review.rating}</td>
-                    <td>{review.comment}</td>
-                    <td>{formatDate(review.created_at)}</td>
-                    <tr>
+                {reviews &&
+                  reviews.map((review) => (
+                    <tr key={review.id}>
+                      <td>{review.id}</td>
+                      <td>{review.application_id}</td>
+                      <td>{review.client_name}</td>
+                      <td>{review.rating}</td>
+                      <td>{review.comment}</td>
+                      <td>
+                        <span
+                          className={`reviews-page__status reviews-page__status--${review.status}`}
+                        >
+                          {review.status === "pending" && "На модерации"}
+                          {review.status === "approved" && "Одобрен"}
+                          {review.status === "rejected" && "Отклонен"}
+                        </span>
+                      </td>
+                      <td>{formatDate(review.created_at)}</td>
+                      <td>
                         <div className="reviews-page__buttons">
-                            <button className="reviews-page__btn reviews-page__btn--reject" type="button">Отклонить</button>
-                            <button className="reviews-page__btn" type="button">Одобрить</button>
+                          <button
+                            className="reviews-page__btn reviews-page__btn--reject"
+                            type="button"
+                            onClick={() => handleReject(review.id)}
+                            disabled={review.status === "rejected"}
+                          >
+                            Отклонить
+                          </button>
+                          <button
+                            className="reviews-page__btn"
+                            type="button"
+                            onClick={() => handleApprove(review.id)}
+                            disabled={review.status === "approved"}
+                          >
+                            Одобрить
+                          </button>
                         </div>
+                      </td>
                     </tr>
-                  </tr>
-                ))}
+                  ))}
               </tbody>
             </table>
           )}

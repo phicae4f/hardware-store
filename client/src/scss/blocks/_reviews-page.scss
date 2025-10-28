@@ -81,7 +81,7 @@
 
     & thead tr {
       display: grid;
-      grid-template-columns: 100px 100px 209px 100px 268px 209px 259px;
+      grid-template-columns: 100px 100px 100px 100px 268px 209px 109px 259px;
       padding: 20px 0;
       border-bottom: 1px solid $color-silver;
     }
@@ -92,7 +92,7 @@
 
     & tbody tr {
       display: grid;
-      grid-template-columns: 100px 100px 209px 100px 268px 209px 259px;
+      grid-template-columns: 100px 100px 100px 100px 268px 209px 109px 259px;
       padding: 20px 0;
       width: 100%;
       transition: background-color $transition-300;
@@ -112,6 +112,12 @@
       transition: color $transition-300;
       word-break: break-word;
     }
+
+    &--user {
+        & thead tr, & tbody tr {
+          grid-template-columns: 100px 100px 209px 100px 268px 209px 259px;
+        }
+      }
   }
 
   &__buttons {
@@ -143,21 +149,14 @@
     }
   }
 
+  &__status {
+    color: $color-dim-gray;
 
-//     &__review-btn {
-//       background-color: transparent;
-//       color: $color-moon-yellow;
-//       border: 2px solid $color-moon-yellow;
-//       font-weight: 900;
-//       border-radius: 5px;
-//       padding: 5px 10px;
-//       font-family: $ff-play;
-//       transition: color $transition-300, border $transition-300;
-//       cursor: pointer;
-
-//       &:hover, &:focus-visible {
-//         border: 2px solid $color-nero;
-//         color: $color-nero;
-//       }
-//     }
+    &--approved {
+      color: $color-turbo;
+    }
+    &--rejected {
+      color:  $color-persian-red;
+    }
+  }
 }
