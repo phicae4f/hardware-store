@@ -1,4 +1,3 @@
-import { application } from "express";
 import { db } from "../db.js";
 
 export const reviewsController = {
