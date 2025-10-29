@@ -15,6 +15,7 @@ export const AboutUsSection = () => {
             alt="Фотография создания плана работ"
             // width={590}
             // height={400}
+            loading="lazy"
           />
           <div className="about-us__img-banner">
             <span className="about-us__img-banner-text about-us__img-banner-text--bold">25+</span>

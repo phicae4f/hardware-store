@@ -39,6 +39,7 @@ export const CarouselSection = ({
                 className="carousel__img"
                 src={currentItem.image}
                 alt={currentItem.description}
+                loading="lazy"
               />
             </div>
             <div className="carousel__info">
