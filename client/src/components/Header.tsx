@@ -43,9 +43,9 @@ export const Header = () => {
           
           <ul className="header__nav">
             <li className="header__nav-item" onClick={() => handleNavigation("about-us")}>О нас</li>
-            <li className="header__nav-item">Ремонт</li>
-            <li className="header__nav-item">Строительство</li>
-            <li className="header__nav-item">Дизайн</li>
+            <li className="header__nav-item" onClick={() => handleNavigation("repair")}>Ремонт</li>
+            <li className="header__nav-item" onClick={() => handleNavigation("building")}>Строительство</li>
+            <li className="header__nav-item" onClick={() => handleNavigation("design")}>Дизайн</li>
             <li className="header__nav-item" onClick={() => handleNavigation("contact-us")}>Связаться с нами</li>
           </ul>
           {user ? (
