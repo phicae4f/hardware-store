@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { CarouselItem } from "../mocks/carouselData";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { BsDashCircle } from "react-icons/bs";
 import { GoDash } from "react-icons/go";
 
 interface CarouselSectionProps {

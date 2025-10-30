@@ -15,7 +15,28 @@
   }
 
   &__main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
     width: 300px;
+  }
+
+  &__guide-btn {
+    background-color: transparent;
+    padding: 0;
+    border: 0;
+  }
+
+  &__guide-logo {
+    color: $color-white;
+    cursor: pointer;
+    transition: color $transition-300;
+
+    &:hover, &:focus-visible {
+      color: $color-turbo;
+    }
+    // margin: 0 0 0 auto;
   }
 
   &__logo-wrapper {
