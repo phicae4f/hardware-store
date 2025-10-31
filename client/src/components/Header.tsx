@@ -4,10 +4,17 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux";
 import { DropDown } from "./Dropdown";
 import { scrollToSection } from "../utils/scrollToSection";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { useState } from "react";
 
 
 export const Header = () => {
   const { user } = useAppSelector((state) => state.auth);
+  const [isBurgerActive, setIsBurgerActive] = useState(false)
+
+  const handleClickBurger = (e) => {
+    setIsBurgerActive(!isBurgerActive)
+  }
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -22,6 +29,7 @@ export const Header = () => {
       scrollToSection(sectionId)
     }
   }
+
 
   
 
@@ -40,7 +48,11 @@ export const Header = () => {
             </div>
           </div>
           </Link>
-          
+          <button className={`header__burger ${isBurgerActive ? "header__burger--active" : ""}`}onClick={handleClickBurger} type="button" aria-label="Открыть бургерное меню">
+            <span className="header__burger-line"></span>
+            <span className="header__burger-line"></span>
+            <span className="header__burger-line"></span>
+          </button>
           <ul className="header__nav">
             <li className="header__nav-item" onClick={() => handleNavigation("about-us")}>О нас</li>
             <li className="header__nav-item" onClick={() => handleNavigation("repair")}>Ремонт</li>
