@@ -1,46 +1,39 @@
-import "dotenv/config"
-import mysql from "mysql2/promise"
+import "dotenv/config";
+import mysql from "mysql2/promise";
 
 export const db = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-})
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+});
 
 export async function createTables() {
-    try {
-        await db.execute(
-            `CREATE TABLE IF NOT EXISTS users (
+  try {
+    await db.execute(
+      `CREATE TABLE IF NOT EXISTS workers (
+                id INT PRIMARY KEY AUTO_INCREMENT,
+                name VARCHAR(100) NOT NULL,
+                email VARCHAR(100) UNIQUE NOT NULL,
+                phone VARCHAR(20),
+                specialty VARCHAR(100) DEFAULT 'Строитель',
+                is_active BOOLEAN DEFAULT TRUE,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )`
+    );
+
+    await db.execute(
+      `CREATE TABLE IF NOT EXISTS users (
             id INT PRIMARY KEY AUTO_INCREMENT,
             login VARCHAR(50) UNIQUE NOT NULL,
             password_hash VARCHAR(255) NOT NULL,
-            role ENUM('admin', 'user') DEFAULT 'user',
+            role ENUM('admin', 'user', 'worker') DEFAULT 'user',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )`
-        )
-        await db.execute(
-            `CREATE TABLE IF NOT EXISTS projects (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            title VARCHAR(255) NOT NULL,
-            description TEXT,
-            status ENUM('active', 'inactive') DEFAULT 'active',
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-            )`
-        )
-        await db.execute(
-            `CREATE TABLE IF NOT EXISTS project_images (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            project_id INT,
-            image_url VARCHAR(500) NOT NULL,
-            image_order INT DEFAULT 0,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
-            )`
-        )
-        await db.execute(
-            `CREATE TABLE IF NOT EXISTS applications  (
+    );
+
+    await db.execute(
+      `CREATE TABLE IF NOT EXISTS applications  (
             id INT PRIMARY KEY AUTO_INCREMENT,
             user_id INT NULL,
             client_name VARCHAR(100) NOT NULL,
@@ -60,14 +53,16 @@ export async function createTables() {
             ) NOT NULL,
             status ENUM('Новая', 'В работе', 'Выполнена') DEFAULT 'Новая',
             admin_notes TEXT,
+            worker_id INT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+            FOREIGN KEY (worker_id) REFERENCES workers(id) ON DELETE SET NULL
             )`
-        )
+    );
 
-        await db.execute(
-            `CREATE TABLE IF NOT EXISTS reviews (
+    await db.execute(
+      `CREATE TABLE IF NOT EXISTS reviews (
             id INT PRIMARY KEY AUTO_INCREMENT,
             application_id INT NOT NULL,
             user_id INT NOT NULL,
@@ -81,10 +76,40 @@ export async function createTables() {
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
             UNIQUE KEY unique_application_review (application_id)
             )`
-        )
+    );
 
-        console.log("All tables were created/checked")
-    } catch(error) {
-        console.log("Error during creating tables: ", error)
-    }
+    await db.execute(
+      `CREATE TABLE IF NOT EXISTS project_stages (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            application_id INT NOT NULL,
+            title VARCHAR(100) NOT NULL,
+            description TEXT,
+            status ENUM('pending', 'in_progress', 'completed') DEFAULT 'pending',
+            percentage INT DEFAULT 0 CHECK (percentage >= 0 AND percentage <= 100),
+            start_date DATE,
+            end_date DATE,
+            order_index INT DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            FOREIGN KEY (application_id) REFERENCES applications(id) ON DELETE CASCADE
+            )`
+    );
+
+    await db.execute(
+      `CREATE TABLE IF NOT EXISTS stage_comments (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            stage_id INT NOT NULL,
+            worker_id INT NOT NULL,
+            comment TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (stage_id) REFERENCES project_stages(id) ON DELETE CASCADE,
+            FOREIGN KEY (worker_id) REFERENCES workers(id) ON DELETE CASCADE
+
+            )`
+    );
+
+    console.log("All tables were created/checked");
+  } catch (error) {
+    console.log("Error during creating tables: ", error);
+  }
 }

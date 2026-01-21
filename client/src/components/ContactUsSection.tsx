@@ -38,15 +38,18 @@ export const ContactUsSection = () => {
 
         try {
             const token = localStorage.getItem("token")
-            const headers: HeadersInit = {
-                "Content-Type": "application/json"
-            }
-            if(token) {
-                headers["Authorization"] = `Bearer ${token}`
-            }
+            // const headers: HeadersInit = {
+            //     "Content-Type": "application/json"
+            // }
+            // if(token) {
+            //     headers["Authorization"] = `Bearer ${token}`
+            // }
             const response = await fetch(`${import.meta.env.VITE_API_URL}/applications`, {
                 method: "POST",
-                headers: headers,
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(token ? {'Authorization': `Bearer ${token}`} : {})
+                },
                 body: JSON.stringify(data)
             })
 
