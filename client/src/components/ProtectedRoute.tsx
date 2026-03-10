@@ -3,11 +3,23 @@ import { useAppSelector } from "../hooks/redux"
 
 interface ProtectedRouteProps {
     children: React.ReactNode;
-    requiredRole?: "user" | "admin";
+    requiredRole?: "user" | "admin" | "worker";
+    workerOnly?: boolean
 }
 
-export const ProtectedRoute = ({children, requiredRole}: ProtectedRouteProps) => {
+export const ProtectedRoute = ({children, requiredRole, workerOnly = false}: ProtectedRouteProps) => {
     const {user} = useAppSelector((state) => state.auth)
+
+    if(workerOnly) {
+        const workerData = localStorage.getItem("worker")
+        const workerToken = localStorage.getItem("workerToken")
+
+        if(!workerData || !workerToken) {
+            return <Navigate to="/worker/login" replace/>
+        }
+
+        return <>{children}</>
+    }
 
     if(!user) {
         return (

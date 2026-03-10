@@ -15,10 +15,12 @@ export async function createTables() {
                 id INT PRIMARY KEY AUTO_INCREMENT,
                 name VARCHAR(100) NOT NULL,
                 email VARCHAR(100) UNIQUE NOT NULL,
+                login VARCHAR(50) UNIQUE NOT NULL,
                 phone VARCHAR(20),
                 password_hash VARCHAR(255) NOT NULL,
                 specialty VARCHAR(100) DEFAULT 'Строитель',
                 is_active BOOLEAN DEFAULT TRUE,
+                requires_password_change BOOLEAN DEFAULT TRUE,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )`
     );

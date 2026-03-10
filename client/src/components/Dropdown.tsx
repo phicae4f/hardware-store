@@ -61,6 +61,19 @@ export const DropDown = () => {
                             <Link to="/admin/reviews" className="dropdown__item" onClick={handleItemClick}>
                                 Модерация отзывов
                             </Link>
+                            <Link to="/admin/new-worker" className="dropdown__item" onClick={handleItemClick}>
+                                Добавить рабочего
+                            </Link>
+                        </>
+                    )}
+                    {user.role === "worker" && (
+                        <>
+                            <Link to="/worker/applications" className="dropdown__item" onClick={handleItemClick}>
+                                Мои заказы
+                            </Link>
+                            <Link to="/worker/change-password" className="dropdown__item" onClick={handleItemClick}>
+                                Сменить пароль
+                            </Link>
                         </>
                     )}
                     <button className="dropdown__logout" type="button" onClick={handleLogout}>

@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { decode } from "jsonwebtoken";
 import "dotenv/config";
 
 export const authenticate = (req, res, next) => {
@@ -12,6 +12,13 @@ export const authenticate = (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    if(!decoded.userId || !decoded.role) {
+      return res.status(401).json({
+        success: false,
+        message: "Невалидный токен"
+      })
+    }
     req.user = decoded;
     next();
   } catch (error) {

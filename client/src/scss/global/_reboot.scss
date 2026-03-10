@@ -12,14 +12,21 @@ body {
     margin: 0;
     padding: 0;
     font-family: $ff-play;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
     background-color: $color-white-smoke;
 }
 
-main {
-    flex-grow: 1;
+// main {
+//     flex-grow: 1;
+// }
+
+.layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.layout-content {
+    flex: 1 0 auto;
 }
 
 img {

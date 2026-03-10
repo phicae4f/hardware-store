@@ -2,7 +2,7 @@ import {configureStore} from "@reduxjs/toolkit";
 import authSlice from "./slices/authSlice";
 import applicationSlice from "./slices/applicationsSlice";
 import reviewsSlice from "./slices/reviewsSlice";
-import workerAuthSlice from "./slices/workerSlice"
+import workerSlice from "./slices/workerSlice";
 
 
 export const store = configureStore({
@@ -10,7 +10,7 @@ export const store = configureStore({
         auth: authSlice,
         applications: applicationSlice,
         reviews: reviewsSlice,
-        worker: workerAuthSlice,
+        worker: workerSlice
     }
 })
 

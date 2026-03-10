@@ -4,7 +4,15 @@ interface AuthState {
     user: null | {
         id: number,
         login: string,
-        role: "admin" | "user"
+        role: "admin" | "user" | "worker"
+        //worker
+        workerId?: string,
+        name?: string;
+        phone?: string;
+        email?: string;
+        specialty?: string;
+        isActive?: boolean;
+        requiresPasswordChange?: boolean;
     },
     token: string | null,
     isLoading: boolean,
@@ -13,8 +21,8 @@ interface AuthState {
 
 
 const initialState: AuthState = {
-    user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null,
-    token: localStorage.getItem("token"),
+    user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : localStorage.getItem("worker") ? JSON.parse(localStorage.getItem("user")!) : null,
+    token: localStorage.getItem("token") || localStorage.getItem("workerToken"),
     isLoading: false,
     error: null,
 }
@@ -68,6 +76,8 @@ const authSlice = createSlice({
             state.token = null
             localStorage.removeItem("token")
             localStorage.removeItem("user")
+            localStorage.removeItem("workerToken")
+            localStorage.removeItem("worker")
         },
         clearError: (state) => {
             state.error = null
@@ -84,8 +94,14 @@ const authSlice = createSlice({
             state.isLoading = false
             state.user = action.payload.data.user
             state.token = action.payload.data.token
-            localStorage.setItem("token", action.payload.data.token)
-            localStorage.setItem("user", JSON.stringify(action.payload.data.user))
+
+            if(action.payload.data.user.role === "worker") {
+                localStorage.setItem("workerToken", action.payload.data.token)
+                localStorage.setItem("worker", JSON.stringify(action.payload.data.user))
+            } else {
+                localStorage.setItem("token", action.payload.data.token)
+                localStorage.setItem("user", JSON.stringify(action.payload.data.user))
+            }
         })
         .addCase(loginUser.rejected, (state, action) => {
             state.isLoading = false

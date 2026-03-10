@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import { createTables } from "./db.js";
 import { userRouter } from "./routes/user.js";
-import { workersRoute } from "./routes/workers.js";
+import { workerAdminRouter } from "./routes/workerAdmin.js";
 import { applicationRouter } from "./routes/application.js";
 import { reviewsRouter } from "./routes/reviews.js";
 import { projectsRouter } from "./routes/projects.js";
@@ -21,10 +21,10 @@ app.use(express.json())
 createTables()
 
 app.use("/api/auth", userRouter)
-app.use("/api/worker-auth", workersRoute)
 app.use("/api/applications", applicationRouter)
 app.use("/api/reviews", reviewsRouter)
 app.use("/api/projects", projectsRouter)
+app.use("/api/workers", workerAdminRouter)
 
 
 app.listen(PORT, () => {

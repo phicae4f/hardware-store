@@ -8,10 +8,10 @@ interface LayoutProps {
 
 export const Layout = ({ children }: LayoutProps) => {
     return (
-        <>
-        <Header/>
-        <main>{children}</main>
-        <Footer/>
-        </>
+        <div className="layout-wrapper">
+            <Header/>
+            <main className="layout-content">{children}</main>
+            <Footer/>
+        </div>
     )
 }

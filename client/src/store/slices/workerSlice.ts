@@ -1,151 +1,150 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { RootState } from "../store";
 
 interface Worker {
   id: number;
-  email: string;
   name: string;
   phone: string;
+  email: string;
   specialty: string;
-  role: "worker";
+  login: string;
+  isActive?: boolean;
+  requiresPasswordChange?: boolean;
 }
 
-interface WorkerAuthState {
-  worker: Worker | null;
-  workerToken: string | null;
+interface WorkerState {
+  workers: Worker[];
+  currentWorker: Worker | null;
+  token: string | null;
   isLoading: boolean;
   error: string | null;
+  tempPassword: string | null;
+  successMessage: string | null;
 }
 
-const initialState: WorkerAuthState = {
-  worker: localStorage.getItem("worker")
+const initialState: WorkerState = {
+  workers: [],
+  currentWorker: localStorage.getItem("worker")
     ? JSON.parse(localStorage.getItem("worker")!)
     : null,
-  workerToken: localStorage.getItem("workerToken"),
+  token: localStorage.getItem("workerToken"),
   isLoading: false,
   error: null,
+  tempPassword: null,
+  successMessage: null
 };
 
-export const registerWorker = createAsyncThunk(
-  "workerAuth/registerWorker",
+export const createWorker = createAsyncThunk(
+  "worker/createWorker",
   async (
-    credentials: {
-      email: string;
-      password: string;
+    workerData: {
       name: string;
+      login: string;
       phone: string;
+      email: string;
       specialty: string;
     },
-    { rejectWithValue },
+    { getState, rejectWithValue },
   ) => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/worker-auth/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(credentials),
-        },
-      );
+      const state = getState() as RootState;
+      const token = state.auth.token;
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Ошибка регистрации");
+      if (!token) {
+        throw new Error("Требуется авторизация");
       }
+
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/workers/create-worker`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(workerData),
+      });
 
       const data = await response.json();
 
-      return data.data;
+      if (!response.ok) {
+        throw new Error(
+          data.message || "Не удалось зарегистрировать работника",
+        );
+      }
+
+      return data;
     } catch (error: any) {
-      rejectWithValue(error.message || "Ошибка регистрации");
+      return rejectWithValue(error.message || "Не удалось зарегистрировать работника");
     }
   },
 );
 
-export const loginWorker = createAsyncThunk(
-  "workerAuth/loginWorker",
-  async (
-    credentials: { email: string; password: string },
-    { rejectWithValue },
-  ) => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/worker-auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(credentials),
-        },
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Ошибка входа в аккаунт");
-      }
-
-      const data = await response.json();
-      return data.data;
-    } catch (error: any) {
-      return rejectWithValue(error.message || "Ошибка входа в аккаунт");
-    }
-  },
-);
-
-const workerAuthSlice = createSlice({
-  name: "workerAuth",
+const workerSlice = createSlice({
+  name: "worker",
   initialState,
   reducers: {
-    workerLogout: (state) => {
-      state.worker = null;
-      state.workerToken = null;
-      localStorage.removeItem("worker");
-      localStorage.removeItem("workerToken");
-    },
-    clearErrorWorkerAuth: (state) => {
+    clearWorkerError: (state) => {
       state.error = null;
     },
+    clearSuccessMessage: (state) => {
+      state.successMessage = null
+    },
+    clearTempPassword: (state) => {
+      state.tempPassword = null
+    },
+    logoutWorker: (state) => {
+      state.currentWorker = null
+      state.token = null
+      localStorage.removeItem("workerToken")
+      localStorage.removeItem("token")
+    }
   },
   extraReducers: (builder) => {
     builder
-      //REGISTER
-      .addCase(registerWorker.pending, (state) => {
+      //CREATE NEW WORKER
+      .addCase(createWorker.pending, (state) => {
         state.isLoading = true;
         state.error = null;
+        state.tempPassword = null;
+        state.successMessage = null
       })
-      .addCase(registerWorker.fulfilled, (state, action) => {
+      .addCase(createWorker.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.worker = action.payload.worker;
-        state.workerToken = action.payload.token;
-        localStorage.setItem("worker", JSON.stringify(action.payload.worker));
-        localStorage.setItem("workerToken", action.payload.token);
-      })
-      .addCase(registerWorker.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = (action.payload as string) || "Ошибка регистрации";
-      })
-      //LOGIN
-      .addCase(loginWorker.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(loginWorker.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.worker = action.payload.worker;
-        state.workerToken = action.payload.token;
+        state.successMessage = action.payload.message || "Рабочий успешно создан";
 
-        localStorage.setItem("worker", JSON.stringify(action.payload.worker));
-        localStorage.setItem("workerToken", action.payload.token);
-      })
+        if (action.payload.data?.tempPassword) {
+          state.tempPassword = action.payload.data.tempPassword;
+        }
 
-      .addCase(loginWorker.rejected, (state, action) => {
+        if (action.payload.data) {
+          const workerData = action.payload.data;
+          const newWorker: Worker = {
+            id: workerData.id,
+            name: workerData.name,
+            login: workerData.login,
+            email: workerData.email,
+            phone: workerData.phone,
+            specialty: workerData.specialty,
+            isActive: workerData.is_active !== false,
+            requiresPasswordChange: workerData.requires_password_change || true,
+          };
+          state.workers.push(newWorker);
+        }
+      })
+      .addCase(createWorker.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = (action.payload as string) || "Ошибка авторизации";
+        state.error = action.payload as string || "Не удалось создать работника";
       });
   },
 });
 
-export const { workerLogout, clearErrorWorkerAuth } = workerAuthSlice.actions;
-export default workerAuthSlice.reducer;
+
+export const { clearWorkerError, clearSuccessMessage, clearTempPassword, logoutWorker } = workerSlice.actions;
+
+export const selectWorkers = (state: RootState) => state.worker.workers
+export const selectCurrentWorker = (state: RootState) => state.worker.currentWorker
+export const selectWorkerToken = (state: RootState) => state.worker.token
+export const selectWorkerLoading  = (state: RootState) => state.worker.isLoading
+export const selectWorkerError  = (state: RootState) => state.worker.error
+export const selectWorkerTempPassword   = (state: RootState) => state.worker.tempPassword
+
+export default workerSlice.reducer;
