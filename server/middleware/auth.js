@@ -13,11 +13,23 @@ export const authenticate = (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    if(!decoded.userId || !decoded.role) {
+    if (!decoded.role) {
       return res.status(401).json({
         success: false,
-        message: "Невалидный токен"
-      })
+        message: "Невалидный токен: отсутствует роль",
+      });
+    }
+    if (decoded.role === "worker" && !decoded.workerId) {
+      return res.status(401).json({
+        success: false,
+        message: "Невалидный токен: отсутствует workerId",
+      });
+    }
+    if (decoded.role !== "worker" && !decoded.userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Невалидный токен: отсутствует userId",
+      });
     }
     req.user = decoded;
     next();
@@ -42,7 +54,7 @@ export const optionalAuth = (req, res, next) => {
 
     next();
   } catch (error) {
-    req.user = null();
+    req.user = null;
     next();
   }
 };

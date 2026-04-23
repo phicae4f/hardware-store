@@ -12,6 +12,9 @@ import { MyReviews } from "./pages/MyReviews";
 import { NewWorkerPage } from "./pages/NewWorkerPage";
 import { WorkerApplicationsPage } from "./pages/WorkerApplicationsPage";
 import { WorkerPasswordPage } from "./pages/WorkerPasswordPage";
+import { WorkerProjectDetailPage } from "./pages/WorkerProjectDetailPage";
+import { AdminWorkersPage } from "./pages/AdminWorkersPage";
+import { AdminDashboardPage } from "./pages/AdminDashboardPage";
 
 function App() {
   return (
@@ -94,6 +97,36 @@ function App() {
             <ProtectedRoute requiredRole="worker">
               <Layout>
                 <WorkerPasswordPage />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/worker/applications/:id"
+          element={
+            <ProtectedRoute requiredRole="worker">
+              <Layout>
+                <WorkerProjectDetailPage />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/workers"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <Layout>
+                <AdminWorkersPage />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <Layout>
+                <AdminDashboardPage />
               </Layout>
             </ProtectedRoute>
           }

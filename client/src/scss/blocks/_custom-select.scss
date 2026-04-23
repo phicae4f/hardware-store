@@ -1,4 +1,5 @@
 @use "../global/variables" as *;
+@use "../global/mixins" as *;
 
 .custom-select {
     width: 250px;
@@ -10,10 +11,25 @@
     margin: 0;
     color: $color-silver;
     transition: color $transition-300, border $transition-300;
+    background-color: $color-white;
+    cursor: pointer;
+
+    @include vp-1023 {
+        width: 220px;
+    }
+
+    @include vp-767 {
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+    }
 
     &:focus, &:focus-visible, &:hover {
         color: $color-dim-gray;
         border: 1px solid $color-dim-gray;
     }
-    
+}
+
+.custom-select__title {
+    color: $color-silver;
 }

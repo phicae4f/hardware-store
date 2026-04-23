@@ -1,7 +1,8 @@
 @use "../global/variables" as *;
+@use "../global/mixins" as *;
 
 .modal {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
@@ -22,6 +23,18 @@
         border-radius: 10px;
         max-height: 90vh;
         width: 525px;
+
+        @include vp-1023 {
+            width: 90%;
+            max-width: 525px;
+            padding: 15px 20px;
+        }
+
+        @include vp-767 {
+            width: 95%;
+            padding: 12px 15px;
+            gap: 15px;
+        }
     }
 
     &__header {
@@ -35,6 +48,11 @@
         color: $color-nero;
         font-weight: 300;
         font-size: 30px;
+
+        @include vp-767 {
+            font-size: 24px;
+            margin: 0 0 5px;
+        }
     }
 
     &__close-btn {
@@ -47,6 +65,11 @@
         display: flex;
         flex-wrap: wrap;
         gap: 15px;
+
+        @include vp-767 {
+            flex-direction: column;
+            gap: 12px;
+        }
     }
 
     &__group {
@@ -58,6 +81,11 @@
         width: 230px;
         flex-shrink: 1;
 
+        @include vp-767 {
+            width: 100%;
+            padding: 5px 0;
+        }
+
         &:last-child {
             flex-direction: row;
             width: 100%;
@@ -65,6 +93,8 @@
     }
 
     &__group-name {
+        font-size: 14px;
+        color: $color-dim-gray;
     }
     
     &__group-value {
@@ -74,20 +104,24 @@
     }
 
     &__select {
-            width: 100%;
-    font-family: $ff-play;
-    padding: 10px;
-    border: 1px solid $color-silver;
-    border-radius: 5px;
-    outline: none;
-    margin: 0;
-    color: $color-silver;
-    transition: color $transition-300, border $transition-300;
+        width: 100%;
+        font-family: $ff-play;
+        padding: 10px;
+        border: 1px solid $color-silver;
+        border-radius: 5px;
+        outline: none;
+        margin: 0;
+        color: $color-silver;
+        transition: color $transition-300, border $transition-300;
 
-    &:focus, &:focus-visible, &:hover {
-        color: $color-dim-gray;
-        border: 1px solid $color-dim-gray;
-    }
+        @include vp-767 {
+            padding: 8px;
+        }
+
+        &:focus, &:focus-visible, &:hover {
+            color: $color-dim-gray;
+            border: 1px solid $color-dim-gray;
+        }
     }
 
     &__textarea {
@@ -98,6 +132,12 @@
         padding: 10px;
         border-radius: 5px;
         transition: border $transition-300;
+        font-family: $ff-play;
+
+        @include vp-767 {
+            padding: 8px;
+            font-size: 14px;
+        }
 
         &::placeholder {
             font-family: $ff-play;
@@ -105,13 +145,17 @@
         }
 
         &:focus, &:focus-visible, &:hover {
-        border: 1px solid $color-dim-gray;
-    }
+            border: 1px solid $color-dim-gray;
+        }
     }
 
     &__footer {
         display: flex;
         gap: 15px;
+
+        @include vp-767 {
+            gap: 10px;
+        }
     }
 
     &__btn {
@@ -129,19 +173,25 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: color $transition-300, background-color $transition-300, border $transition-300,;
+        transition: color $transition-300, background-color $transition-300, border $transition-300;
 
-         &--color {
+        @include vp-767 {
+            min-width: 90px;
+            font-size: 16px;
+            padding: 5px 10px;
+            height: 35px;
+        }
+
+        &--color {
             background-color: $color-turbo;
             border: 1px solid $color-turbo;
             color: $color-black;
 
             &:hover, &:focus-visible {
-            border: 1px solid $color-white;
-            color: $color-white;
-            background-color: transparent;
-        }
-            
+                border: 1px solid $color-white;
+                color: $color-white;
+                background-color: transparent;
+            }
         }
 
         &:hover, &:focus-visible {

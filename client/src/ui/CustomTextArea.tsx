@@ -1,9 +1,6 @@
 import type { TextareaHTMLAttributes } from "react"
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md"
 
-// interface CustomTextAreaProps {
-//     placeholder: string
-// }
 
 interface CustomTextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   

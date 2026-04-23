@@ -132,7 +132,7 @@ export const userController = {
 
       const [workers] = await db.execute(
         `SELECT * FROM workers WHERE (login = ? OR email = ?) AND is_active = TRUE`,
-        [login, login]
+        [login, login],
       );
 
       if (workers.length > 0) {
@@ -188,6 +188,100 @@ export const userController = {
       res.status(500).json({
         success: false,
         message: "Ошибка авторизации",
+      });
+    }
+  },
+
+  async changeWorkerPassword(req, res) {
+    try {
+      const { oldPassword, newPassword } = req.body;
+      if (!req.user || req.user.role !== "worker") {
+        return res.status(403).json({
+          success: false,
+          message: "Доступ только для рабочих",
+        });
+      }
+
+      const workerId = req.user.workerId;
+      if (!oldPassword || !newPassword) {
+        return res.status(400).json({
+          success: false,
+          message: "Старый и новые пароли обязательны",
+        });
+      }
+
+      if (newPassword.length < 6) {
+        return res.status(400).json({
+          success: false,
+          message: "Новый пароль должен содержать минимум 6 символов",
+        });
+      }
+
+      const [workers] = await db.execute(
+        `SELECT password_hash FROM workers WHERE id = ? AND is_active = true`,
+        [workerId],
+      );
+
+      if (workers.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Рабочий не найден",
+        });
+      }
+
+      const isValid = await bcrypt.compare(
+        oldPassword,
+        workers[0].password_hash,
+      );
+      if (!isValid) {
+        return res.status(400).json({
+          success: false,
+          message: "Неверный старый пароль",
+        });
+      }
+
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await db.execute(
+        `UPDATE workers SET password_hash = ?, requires_password_change = false WHERE id = ?`,
+        [hashedPassword, workerId],
+      );
+
+      const [updatedWorker] = await db.execute(
+        `SELECT id, login, name, email, specialty, requires_password_change FROM workers WHERE id = ?`,
+        [workerId],
+      );
+      const worker = updatedWorker[0];
+
+      const newToken = jwt.sign(
+        {
+          workerId: worker.id,
+          login: worker.login,
+          name: worker.name,
+          email: worker.email,
+          role: "worker",
+          requiresPasswordChange: false,
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: "24h" },
+      );
+      res.json({
+        success: true,
+        message: "Пароль успешно изменен",
+        token: newToken,
+        user: {
+          id: worker.id,
+          login: worker.login,
+          name: worker.name,
+          email: worker.email,
+          role: "worker",
+          requires_password_change: false,
+        },
+      });
+    } catch (error) {
+      console.error("Change password error:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ошибка при смене пароля",
       });
     }
   },

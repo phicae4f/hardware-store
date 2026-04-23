@@ -1,4 +1,5 @@
 @use "../global/variables" as *;
+@use "../global/mixins" as *;
 
 .dropdown {
     position: relative;
@@ -15,16 +16,28 @@
         display: flex;
         align-items: center;
         gap: 10px;
+
+        @include vp-767 {
+            gap: 5px;
+        }
     }
 
     &__username {
         color: $color-turbo;
         font-size: 20px;
+
+        @include vp-767 {
+            font-size: 16px;
+        }
     }
 
     &__arrow {
         color: $color-turbo;
         transition: transform $transition-300;
+
+        @include vp-767 {
+            font-size: 12px;
+        }
 
         &.open {
             transform: rotate(180deg);
@@ -50,6 +63,16 @@
         visibility: hidden;
         pointer-events: none;
 
+        @include vp-1023 {
+            right: -20px;
+            min-width: 180px;
+        }
+
+        @include vp-767 {
+            right: -10px;
+            min-width: 160px;
+        }
+
         &.open {
             transform: translateY(20px);
             opacity: 1;
@@ -64,7 +87,14 @@
         color: $color-nero;
         width: 100%;
         transition: background-color $transition-300;
-        
+        text-decoration: none;
+        display: block;
+        box-sizing: border-box;
+
+        @include vp-767 {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
 
         &:hover, &:focus-visible {
             background-color: $color-white-smoke;
@@ -83,6 +113,13 @@
         transition: background-color $transition-300;
         display: flex;
         justify-content: flex-start;
+        text-align: left;
+
+        @include vp-767 {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+
         &:hover, &:focus-visible {
             background-color: $color-white-smoke;
         }

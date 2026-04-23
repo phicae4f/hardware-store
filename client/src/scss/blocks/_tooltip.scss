@@ -1,4 +1,5 @@
 @use "../global/variables" as *;
+@use "../global/mixins" as *;
 
 .tooltip {
   position: relative;
@@ -39,5 +40,14 @@
   &:hover &__content {
     visibility: visible;
     opacity: 1;
+  }
+
+  @include vp-767 {
+    &__content {
+      width: 250px;
+      max-width: 250px;
+      font-size: 12px;
+      padding: 6px 10px;
+    }
   }
 }

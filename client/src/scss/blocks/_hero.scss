@@ -1,4 +1,5 @@
 @use "../global/variables" as *;
+@use "../global/mixins" as *;
 
 .hero {
     padding-top: 88px;
@@ -9,6 +10,17 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    position: relative;
+
+    @include vp-1023 {
+        padding-top: 70px;
+        min-height: 80vh;
+    }
+
+    @include vp-767 {
+        padding-top: 60px;
+        min-height: 70vh;
+    }
 
     &::before {
         position: absolute;
@@ -28,6 +40,14 @@
         align-items: flex-start;
         max-width: 1200px;
         gap: 20px;
+
+        @include vp-1023 {
+            max-width: 800px;
+        }
+
+        @include vp-767 {
+            gap: 15px;
+        }
     }
 
     &__title {
@@ -36,6 +56,14 @@
         font-size: 80px;
         color: $color-white;
         margin: 0;
+
+        @include vp-1023 {
+            font-size: 56px;
+        }
+
+        @include vp-767 {
+            font-size: 32px;
+        }
 
         &--highlight {
             color: $color-turbo;
@@ -46,12 +74,28 @@
         margin: 0 0 30px;
         color: $color-silver;
         font-size: 32px;
+
+        @include vp-1023 {
+            font-size: 24px;
+            margin: 0 0 20px;
+        }
+
+        @include vp-767 {
+            font-size: 16px;
+            margin: 0 0 15px;
+        }
     }
 
     &__links {
         display: flex;
         justify-content: flex-start;
         gap: 20px;
+
+        @include vp-767 {
+            flex-direction: column;
+            width: 100%;
+            gap: 15px;
+        }
     }
 
     &__link {
@@ -69,19 +113,30 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: color $transition-300, background-color $transition-300, border $transition-300,;
+        transition: color $transition-300, background-color $transition-300, border $transition-300;
 
-         &--color {
+        @include vp-1023 {
+            min-width: 180px;
+            height: 50px;
+            font-size: 18px;
+        }
+
+        @include vp-767 {
+            min-width: 100%;
+            height: 45px;
+            font-size: 16px;
+        }
+
+        &--color {
             background-color: $color-turbo;
             border: 1px solid $color-turbo;
             color: $color-black;
 
             &:hover, &:focus-visible {
-            border: 1px solid $color-white;
-            color: $color-white;
-            background-color: transparent;
-        }
-            
+                border: 1px solid $color-white;
+                color: $color-white;
+                background-color: transparent;
+            }
         }
 
         &:hover, &:focus-visible {

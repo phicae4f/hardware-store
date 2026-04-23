@@ -1,85 +1,138 @@
 import { useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks/redux"
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../store/slices/authSlice";
 
 export const DropDown = () => {
-    const {user} = useAppSelector(state => state.auth)
-    const [isOpen, setIsOpen] = useState(false)
-    const dispatch = useAppDispatch()
-    const navigate = useNavigate()
+  const { user } = useAppSelector((state) => state.auth);
+  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-    const dropdownRef = useRef<HTMLDivElement>(null)
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
-            if(dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-                setIsOpen(false)
-            }
-        }
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
 
-        document.addEventListener("mousedown", handleClickOutside)
-        return () => document.removeEventListener("mousedown", handleClickOutside)
-    }, [])
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-    const handleLogout = () => {
-        dispatch(logout())
-        setIsOpen(false)
-        navigate("/")
-    }
+  const handleLogout = () => {
+    dispatch(logout());
+    setIsOpen(false);
+    navigate("/");
+  };
 
-    const handleItemClick = () => {
-        setIsOpen(false)
-    }
+  const handleItemClick = () => {
+    setIsOpen(false);
+  };
 
-    if(!user) {
-        return null;
-    }
+  if (!user) {
+    return null;
+  }
 
-    return (
-        <div className="dropdown" ref={dropdownRef}>
-            <button className="dropdown__button" type="button" onClick={() => setIsOpen(!isOpen)}>
-                <span className="dropdown__username">{user.login}</span>
-                <span className={`dropdown__arrow ${isOpen ? "open": ""}`}>▼</span>
-            </button>
-                <div className={`dropdown__menu ${isOpen ? "open": ""}`}>
-                    {user.role === "user" && (
-                        <>
-                            <Link to="/my-applications" className="dropdown__item" onClick={handleItemClick}>
-                                Мои заявки
-                            </Link>
-                            <Link to="/my-reviews" className="dropdown__item" onClick={handleItemClick}>
-                                Мои отзывы
-                            </Link>
-                        </>
-                    )}
-                    {user.role === "admin" && (
-                        <>
-                            <Link to="/admin/applications" className="dropdown__item" onClick={handleItemClick}>
-                                Все заявки
-                            </Link>
-                            <Link to="/admin/reviews" className="dropdown__item" onClick={handleItemClick}>
-                                Модерация отзывов
-                            </Link>
-                            <Link to="/admin/new-worker" className="dropdown__item" onClick={handleItemClick}>
-                                Добавить рабочего
-                            </Link>
-                        </>
-                    )}
-                    {user.role === "worker" && (
-                        <>
-                            <Link to="/worker/applications" className="dropdown__item" onClick={handleItemClick}>
-                                Мои заказы
-                            </Link>
-                            <Link to="/worker/change-password" className="dropdown__item" onClick={handleItemClick}>
-                                Сменить пароль
-                            </Link>
-                        </>
-                    )}
-                    <button className="dropdown__logout" type="button" onClick={handleLogout}>
-                        Выйти
-                    </button>
-                </div>
-        </div>
-    )
-}
+  return (
+    <div className="dropdown" ref={dropdownRef}>
+      <button
+        className="dropdown__button"
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className="dropdown__username">{user.login}</span>
+        <span className={`dropdown__arrow ${isOpen ? "open" : ""}`}>▼</span>
+      </button>
+      <div className={`dropdown__menu ${isOpen ? "open" : ""}`}>
+        {user.role === "user" && (
+          <>
+            <Link
+              to="/my-applications"
+              className="dropdown__item"
+              onClick={handleItemClick}
+            >
+              Мои заявки
+            </Link>
+            <Link
+              to="/my-reviews"
+              className="dropdown__item"
+              onClick={handleItemClick}
+            >
+              Мои отзывы
+            </Link>
+          </>
+        )}
+        {user.role === "admin" && (
+          <>
+            <Link
+              to="/admin/dashboard"
+              className="dropdown__item"
+              onClick={handleItemClick}
+            >
+              Панель управления
+            </Link>
+            <Link
+              to="/admin/applications"
+              className="dropdown__item"
+              onClick={handleItemClick}
+            >
+              Все заявки
+            </Link>
+            <Link
+              to="/admin/workers"
+              className="dropdown__item"
+              onClick={handleItemClick}
+            >
+              Список рабочих
+            </Link>
+            <Link
+              to="/admin/reviews"
+              className="dropdown__item"
+              onClick={handleItemClick}
+            >
+              Модерация отзывов
+            </Link>
+            <Link
+              to="/admin/new-worker"
+              className="dropdown__item"
+              onClick={handleItemClick}
+            >
+              Добавить рабочего
+            </Link>
+          </>
+        )}
+        {user.role === "worker" && (
+          <>
+            <Link
+              to="/worker/applications"
+              className="dropdown__item"
+              onClick={handleItemClick}
+            >
+              Мои проекты
+            </Link>
+            <Link
+              to="/worker/change-password"
+              className="dropdown__item"
+              onClick={handleItemClick}
+            >
+              Сменить пароль
+            </Link>
+          </>
+        )}
+        <button
+          className="dropdown__logout"
+          type="button"
+          onClick={handleLogout}
+        >
+          Выйти
+        </button>
+      </div>
+    </div>
+  );
+};

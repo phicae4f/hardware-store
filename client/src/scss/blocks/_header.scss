@@ -4,14 +4,12 @@
 .header {
     $root: &;
 
-
     background-color: $color-nero;
     position: fixed;
+    top: 0;
     left: 0;
     right: 0;
     z-index: 100;
-
-
 
     &__wrapper {
         padding: 12px 0;
@@ -19,6 +17,10 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        @include vp-767 {
+            padding: 10px 0;
+        }
     }
 
     &__logo {
@@ -26,10 +28,21 @@
         display: flex;
         gap: 10px;
         align-items: center;
+
+        @include vp-767 {
+            gap: 5px;
+        }
     }
 
     &__logo-icon {
         color: $color-turbo;
+
+        @include vp-767 {
+            svg {
+                width: 40px;
+                height: 40px;
+            }
+        }
     }
 
     &__logo-text {
@@ -39,6 +52,10 @@
         font-weight: 600;
         font-size: 26px;
         user-select: none;
+
+        @include vp-767 {
+            font-size: 18px;
+        }
 
         & span:last-child {
             font-weight: 600;
@@ -61,12 +78,9 @@
         width: 50px;
         height: 50px;
         position: relative;
+        z-index: 101;
 
-        // &:first-child {
-        //     animation: 2s burgerSlideDown;
-        // }
-
-        &:hover, *:focus-visible {
+        &:hover, &:focus-visible {
             color: $color-turbo;
         }
 
@@ -79,40 +93,24 @@
         }
 
         &--active {
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: flex-start;
-            gap: 0;
-
-            @include vp-1023 {
-                position: absolute;
-                padding: 10px 20px;
-                height: 100vh;
-                width: 100vw;
-                top: 0;
-                left: 0;
-                background-color: $color-dim-gray;
-            }
             #{$root}__burger-line {
-                position: absolute;
-                right: 40px;
-                width: 50px;
-                height: 3px;
-
                 &:nth-child(1) {
-                    top: 40px;
+                    transform: rotate(45deg);
+                    top: 50%;
+                    position: absolute;
                 }
                 &:nth-child(2) {
-                    top: 53px;
+                    opacity: 0;
                 }
                 &:nth-child(3) {
-                    top: 66px;
+                    transform: rotate(-45deg);
+                    top: 50%;
+                    position: absolute;
                 }
             }
-            #{$root}__nav {
-                position: absolute;
-                top: 100px;
-                z-index: 10;       
+
+            & + #{$root}__nav {
+                transform: translateX(0);
             }
         }
     }
@@ -121,7 +119,7 @@
         height: 3px;
         background-color: $color-suva-grey;
         width: 100%;
-        transform: translateY(0) rotate(0);
+        transition: $transition-300;
     }
 
     &__nav {
@@ -130,7 +128,24 @@
         margin-left: 30px;
 
         @include vp-1023 {
-            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: $color-nero;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-left: 0;
+            transform: translateX(100%);
+            transition: transform $transition-300;
+            z-index: 100;
+        }
+
+        @include vp-767 {
+            gap: 20px;
         }
     }
 
@@ -145,6 +160,16 @@
         user-select: none;
         cursor: pointer;
 
+        @include vp-1023 {
+            font-size: 24px;
+            padding: 10px 20px;
+        }
+
+        @include vp-767 {
+            font-size: 18px;
+            padding: 8px 16px;
+        }
+
         &:hover, &:focus-visible {
             background-color: $color-suva-grey;
             color: $color-white;
@@ -156,12 +181,12 @@
         align-items: center;
         width: 100px;
         justify-content: flex-end;
-         border: none;
+        border: none;
         background-color: transparent;
         cursor: pointer;
 
         &:hover, &:focus-visible {
-            #{$root}__btn-icon  {
+            #{$root}__btn-icon {
                 color: $color-turbo;
             }
         }
@@ -178,37 +203,27 @@
         transition: color $transition-300;
 
         @include vp-1023 {
-            width: 50px;
-                        height: 50px;
+            width: 40px;
+            height: 40px;
         }
 
-        & svg {
-            
-                    @include vp-1023 {
-                        width: 50px;
-                        height: 50px;
-                    }
+        svg {
+            width: 30px;
+            height: 30px;
 
+            @include vp-1023 {
+                width: 40px;
+                height: 40px;
+            }
         }
     }
 
     &__user-nickname {
         color: $color-turbo;
         font-size: 20px;
-    }
 
-}
-
-@keyframes burgerSlideDown {
-    0% {
-        transform: translateY(0) rotate(0);
-    }
-
-    50% {
-        transform: translateY(100px) rotate(0);
-    }
-
-    100% {
-        transform: translateY(100px) rotate(-90deg);
+        @include vp-767 {
+            font-size: 16px;
+        }
     }
 }

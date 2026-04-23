@@ -1,9 +1,18 @@
 @use "../global/variables" as *;
+@use "../global/mixins" as *;
 
 .applications {
   padding-top: 190px;
   background: linear-gradient(310deg, $color-vis-vis 0%, transparent 100%);
   min-height: 100vh;
+
+  @include vp-1023 {
+    padding-top: 140px;
+  }
+
+  @include vp-767 {
+    padding-top: 100px;
+  }
 
   &__wrapper {
     width: 100%;
@@ -15,6 +24,16 @@
     padding: 20px 50px;
     border-radius: 20px;
     min-height: 60vh;
+
+    @include vp-1023 {
+      gap: 50px;
+      padding: 20px 30px;
+    }
+
+    @include vp-767 {
+      gap: 30px;
+      padding: 15px;
+    }
   }
 
   &__title {
@@ -22,6 +41,14 @@
     font-size: 60px;
     font-weight: 300;
     color: $color-nero;
+
+    @include vp-1023 {
+      font-size: 48px;
+    }
+
+    @include vp-767 {
+      font-size: 32px;
+    }
   }
 
   &__error {
@@ -34,12 +61,21 @@
     gap: 20px;
     margin: 100px auto 0;
     align-items: center;
+
+    @include vp-767 {
+      margin: 50px auto 0;
+    }
   }
 
   &__empty-text {
     margin: 0;
     font-size: 30px;
     color: $color-dim-gray;
+
+    @include vp-767 {
+      font-size: 20px;
+      text-align: center;
+    }
   }
 
   &__empty-link {
@@ -53,6 +89,11 @@
     color: $color-suva-grey;
     cursor: pointer;
     transition: color $transition-300;
+
+    @include vp-767 {
+      font-size: 18px;
+      padding: 8px 16px;
+    }
 
     &::after {
       position: absolute;
@@ -78,15 +119,28 @@
     width: 100%;
     background-color: $color-white-80;
     border-radius: 10px;
+    overflow-x: auto;
+    display: block;
 
     & thead tr {
       display: grid;
       grid-template-columns: repeat(6, 208px);
       padding: 20px 0;
       border-bottom: 1px solid $color-silver;
+
+      @include vp-1023 {
+        grid-template-columns: repeat(6, 150px);
+        padding: 15px 10px;
+      }
+
+      @include vp-767 {
+        grid-template-columns: repeat(6, 120px);
+        font-size: 12px;
+        gap: 5px;
+      }
     }
 
-    & thead td {
+    & thead td, & thead th {
       text-align: center;
     }
 
@@ -96,6 +150,17 @@
       padding: 20px 0;
       width: 100%;
       transition: background-color $transition-300;
+
+      @include vp-1023 {
+        grid-template-columns: repeat(6, 150px);
+        padding: 15px 10px;
+      }
+
+      @include vp-767 {
+        grid-template-columns: repeat(6, 120px);
+        font-size: 12px;
+        gap: 5px;
+      }
 
       &:hover {
         background-color: $color-vis-vis;
@@ -116,48 +181,72 @@
     &--admin {
       & thead tr {
         grid-template-columns: repeat(9, 136px);
+
+        @include vp-1023 {
+          grid-template-columns: repeat(9, 100px);
+        }
+
+        @include vp-767 {
+          grid-template-columns: repeat(9, 80px);
+        }
       }
 
       & tbody tr {
         grid-template-columns: repeat(9, 136px);
+
+        @include vp-1023 {
+          grid-template-columns: repeat(9, 100px);
+        }
+
+        @include vp-767 {
+          grid-template-columns: repeat(9, 80px);
+        }
       }
-
-
     }
   }
 
   &__btn-edit {
-      background-color: transparent;
-      padding: 0;
-      border: none;
-      cursor: pointer;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    cursor: pointer;
 
-      svg {
-        color: $color-dim-gray;
-        transition: color $transition-300;
-      }
+    svg {
+      color: $color-dim-gray;
+      transition: color $transition-300;
 
-      &:hover {
-        svg {
-          color: $color-nero;
-        }
+      @include vp-767 {
+        width: 20px;
+        height: 20px;
       }
     }
 
-    &__review-btn {
-      background-color: transparent;
-      color: $color-moon-yellow;
-      border: 2px solid $color-moon-yellow;
-      font-weight: 900;
-      border-radius: 5px;
-      padding: 5px 10px;
-      font-family: $ff-play;
-      transition: color $transition-300, border $transition-300;
-      cursor: pointer;
-
-      &:hover, &:focus-visible {
-        border: 2px solid $color-nero;
+    &:hover {
+      svg {
         color: $color-nero;
       }
     }
+  }
+
+  &__review-btn {
+    background-color: transparent;
+    color: $color-moon-yellow;
+    border: 2px solid $color-moon-yellow;
+    font-weight: 900;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-family: $ff-play;
+    transition: color $transition-300, border $transition-300;
+    cursor: pointer;
+
+    @include vp-767 {
+      padding: 3px 6px;
+      font-size: 12px;
+    }
+
+    &:hover, &:focus-visible {
+      border: 2px solid $color-nero;
+      color: $color-nero;
+    }
+  }
 }

@@ -1,0 +1,261 @@
+@use "../global/variables" as *;
+@use "../global/mixins" as *;
+
+.project-detail {
+  padding-top: 190px;
+  min-height: 100vh;
+
+  @include vp-1023 {
+    padding-top: 140px;
+  }
+
+  @include vp-767 {
+    padding-top: 100px;
+  }
+
+  &__back-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: $color-lightning-yellow;
+    cursor: pointer;
+    margin-bottom: 30px;
+    font-family: $ff-play;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__header {
+    background: $color-white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  &__title {
+    font-size: 32px;
+    font-weight: 600;
+    color: $color-nero;
+    margin: 0 0 20px;
+  }
+
+  &__info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  &__info-row {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+  }
+
+  &__info-label {
+    font-weight: 600;
+    color: $color-suva-grey;
+    min-width: 100px;
+  }
+
+  &__status-badge {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+
+    &--new {
+      background: rgba(#ff9800, 0.1);
+      color: #ff9800;
+    }
+    &--progress {
+      background: rgba(#2196f3, 0.1);
+      color: #2196f3;
+    }
+    &--completed {
+      background: rgba(#4caf50, 0.1);
+      color: #4caf50;
+    }
+  }
+
+  &__stages {
+    background: $color-white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  &__stages-title {
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0 0 20px;
+  }
+
+  &__stages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__stage {
+    border: 1px solid $color-white-smoke;
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  &__stage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+  }
+
+  &__stage-left {
+    flex: 1;
+  }
+
+  &__stage-title {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0 0 8px;
+  }
+
+  &__stage-description {
+    font-size: 14px;
+    color: $color-dim-gray;
+    margin: 0;
+  }
+
+  &__stage-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+
+    &--pending {
+      background: rgba(#ff9800, 0.1);
+      color: #ff9800;
+    }
+    &--progress {
+      background: rgba(#2196f3, 0.1);
+      color: #2196f3;
+    }
+    &--completed {
+      background: rgba(#4caf50, 0.1);
+      color: #4caf50;
+    }
+  }
+
+  &__stage-progress {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  &__progress-bar {
+    flex: 1;
+    height: 8px;
+    background: $color-white-smoke;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    background: $color-lightning-yellow;
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+
+  &__progress-text {
+    font-size: 14px;
+    font-weight: 500;
+    min-width: 45px;
+  }
+
+  &__stage-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__select {
+    padding: 8px 12px;
+    border: 1px solid $color-silver;
+    border-radius: 8px;
+    font-family: $ff-play;
+    font-size: 14px;
+    background: $color-white;
+    cursor: pointer;
+  }
+
+  &__range {
+    width: 100%;
+    cursor: pointer;
+  }
+
+  &__comment-section {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  &__comment-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid $color-silver;
+    border-radius: 8px;
+    font-family: $ff-play;
+    font-size: 14px;
+    resize: vertical;
+  }
+
+  &__comment-btn {
+    padding: 10px 20px;
+    background: $color-lightning-yellow;
+    border: none;
+    border-radius: 8px;
+    font-family: $ff-play;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover:not(:disabled) {
+      background: $color-lightning-yellow, 10%;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__comments-list {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid $color-white-smoke;
+  }
+
+  &__comment {
+    background: $color-white-smoke;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+
+  &__comment-text {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  &__comment-date {
+    font-size: 11px;
+    color: $color-suva-grey;
+  }
+
+  &__error {
+    text-align: center;
+    color: $color-persian-red;
+    padding: 40px;
+  }
+}

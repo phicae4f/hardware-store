@@ -1,3 +1,4 @@
+// AllApplications.tsx
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../hooks/redux";
 import type { AppDispatch } from "../store/store";
@@ -12,6 +13,7 @@ export const AllApplications = () => {
   const { applications, isLoading, error } = useAppSelector(
     (state) => state.applications
   );
+  const { workers } = useAppSelector((state) => state.worker);
   const dispatch = useDispatch<AppDispatch>();
 
   const [editingApplication, setEditingApplication] = useState<Application | null>(null)
@@ -22,6 +24,12 @@ export const AllApplications = () => {
     dispatch(fetchAllApplications());
   }, [dispatch]);
 
+  // Функция для получения имени рабочего по worker_id
+  const getWorkerName = (workerId: number | null | undefined) => {
+    if (!workerId) return "Не назначен";
+    const worker = workers.find(w => w.id === workerId);
+    return worker ? worker.name : `ID: ${workerId}`;
+  };
 
   const handleEditClick = (application: Application) => {
     setEditingApplication(application)
@@ -33,10 +41,26 @@ export const AllApplications = () => {
     setEditingApplication(null)
   }
 
-  const handleSaveApplication = async (id: number, status: string, adminNotes: string) => {
+  const handleSaveApplication = async (id: number, status: string, adminNotes: string, workerId?: number) => {
     setUpdateLoading(true)
     try {
+      // Обновляем статус и заметки
       await dispatch(updateApplication({id, status, admin_notes: adminNotes})).unwrap()
+      
+      // Если выбран рабочий, назначаем его
+      if (workerId) {
+        const token = localStorage.getItem("token");
+        await fetch(`${import.meta.env.VITE_API_URL}/applications/${id}/assign-worker`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({ worker_id: workerId }),
+        });
+      }
+      
+      // Обновляем список заявок
       dispatch(fetchAllApplications());
       handleCloseModal()
     } catch (error) {
@@ -49,6 +73,7 @@ export const AllApplications = () => {
   if (isLoading) {
     return <div className="loader">Загрузка...</div>;
   }
+
   return (
     <section className="applications">
       <div className="container">
@@ -74,8 +99,10 @@ export const AllApplications = () => {
                   <th>Email</th>
                   <th>Тип услуги</th>
                   <th>Статус</th>
+                  <th>Рабочий</th>
                   <th>Сообщение</th>
                   <th>Дата создания</th>
+                  <th>Действия</th>
                 </tr>
               </thead>
               <tbody>
@@ -87,14 +114,17 @@ export const AllApplications = () => {
                     <td>{application.email}</td>
                     <td>{application.service_type}</td>
                     <td>{application.status}</td>
+                    <td>{getWorkerName(application.worker_id)}</td>
                     <td>
                       <Tooltip content={application.note_message || ""}>
-                        {application.note_message || ""}
+                        {application.note_message?.slice(0, 50) || ""}
                       </Tooltip>
                     </td>
                     <td>{formatDate(application.created_at)}</td>
                     <td>
-                      <button className="applications__btn-edit" type="button" onClick={() => handleEditClick(application)}><LuPencilLine size={30}/></button>
+                      <button className="applications__btn-edit" type="button" onClick={() => handleEditClick(application)}>
+                        <LuPencilLine size={30}/>
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -104,13 +134,12 @@ export const AllApplications = () => {
         </div>
       </div>
       <EditApplicationModal
-      application={editingApplication}
-      isOpen={isModalOpen}
-      onClose={handleCloseModal}
-      onSave={handleSaveApplication}
-      isLoading={updateLoading}
-
-       />
+        application={editingApplication}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSave={handleSaveApplication}
+        isLoading={updateLoading}
+      />
     </section>
   );
 };

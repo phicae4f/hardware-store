@@ -1,0 +1,102 @@
+@use "../global/variables" as *;
+@use "../global/mixins" as *;
+
+.admin-dashboard {
+  padding-top: 190px;
+  min-height: 100vh;
+
+  @include vp-1023 {
+    padding-top: 140px;
+  }
+
+  @include vp-767 {
+    padding-top: 100px;
+  }
+
+  &__wrapper {
+    width: 100%;
+    padding: 20px 0;
+  }
+
+  &__title {
+    margin: 0 0 40px;
+    font-size: 48px;
+    font-weight: 300;
+    color: $color-nero;
+
+    @include vp-767 {
+      font-size: 32px;
+      margin-bottom: 25px;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+
+    @include vp-767 {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  &__card {
+    background: $color-white;
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: translateY(-4px);
+    }
+  }
+
+  &__card-icon {
+    font-size: 48px;
+  }
+
+  &__card-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__card-value {
+    font-size: 36px;
+    font-weight: 700;
+    color: $color-nero;
+  }
+
+  &__card-label {
+    font-size: 14px;
+    color: $color-dim-gray;
+  }
+
+  &__card--total {
+    border-left: 4px solid $color-lightning-yellow;
+  }
+
+  &__card--new {
+    border-left: 4px solid #ff9800;
+  }
+
+  &__card--progress {
+    border-left: 4px solid #2196f3;
+  }
+
+  &__card--completed {
+    border-left: 4px solid #4caf50;
+  }
+
+  &__card--workers {
+    border-left: 4px solid $color-moon-yellow;
+  }
+
+  &__card--reviews {
+    border-left: 4px solid $color-turbo;
+  }
+}

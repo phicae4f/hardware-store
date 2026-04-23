@@ -1,7 +1,16 @@
 @use "../global/variables" as *;
+@use "../global/mixins" as *;
 
 .reviews {
     padding: 190px 0 90px;
+
+    @include vp-1023 {
+        padding: 120px 0 60px;
+    }
+
+    @include vp-767 {
+        padding: 80px 0 40px;
+    }
     
     &__wrapper {
         position: relative;
@@ -10,12 +19,30 @@
         flex-direction: column;
         gap: 100px;
         align-items: center;
+
+        @include vp-767 {
+            gap: 50px;
+        }
     }
 
     &__icon {
         position: absolute;
         right: 230px;
         top: -15px;
+
+        @include vp-1023 {
+            right: 100px;
+            top: -30px;
+
+            svg {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @include vp-767 {
+            display: none;
+        }
     }
 
     &__title {
@@ -23,6 +50,21 @@
         margin: 0;
         font-size: 60px;
         text-align: center;
+
+        @include vp-1023 {
+            font-size: 48px;
+        }
+
+        @include vp-767 {
+            font-size: 32px;
+        }
+    }
+
+    &__empty {
+        font-size: 18px;
+        color: $color-dim-gray;
+        text-align: center;
+        padding: 40px;
     }
 
     &__carousel {
@@ -30,7 +72,10 @@
         gap: 30px;
         align-items: center;
         width: 100%;
-        width: auto;
+
+        @include vp-767 {
+            gap: 15px;
+        }
     }
 
     &__arrow {
@@ -42,6 +87,13 @@
 
         &:hover, &:focus-visible {
             color: $color-turbo;
+        }
+
+        @include vp-767 {
+            svg {
+                width: 24px;
+                height: 24px;
+            }
         }
     }
 
@@ -55,6 +107,7 @@
 
     &__list {
         display: flex;
+        width: 100%;
     }
 
     &__item {
@@ -64,19 +117,39 @@
         align-items: flex-start;
         justify-content: space-between;
         min-height: 236px;
-
         background-color: $color-white;
         padding: 15px 25px;
         border-radius: 10px;
         width: 650px;
+        max-width: 100%;
         box-shadow: 1px 1px 32px 1px $color-silver;
 
+        @include vp-1023 {
+            width: 500px;
+            padding: 15px 20px;
+        }
+
+        @include vp-767 {
+            width: 280px;
+            padding: 12px 15px;
+            gap: 10px;
+            min-height: auto;
+        }
     }
 
     &__stars {
         display: flex;
         gap: 10px;
         margin: 0 auto 10px;
+
+        @include vp-767 {
+            gap: 5px;
+
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
     }
 
     &__star {
@@ -93,6 +166,11 @@
         text-align: left;
         color: $color-dim-gray;
         margin: 0;
+
+        @include vp-767 {
+            font-size: 14px;
+            line-height: 18px;
+        }
     }
 
     &__user {
@@ -122,9 +200,18 @@
         &--active, &:hover {
             background-color: $color-turbo;
         }
+
+        @include vp-767 {
+            width: 12px;
+            height: 12px;
+        }
     }
 
     &__username {
         font-size: 20px;
+
+        @include vp-767 {
+            font-size: 16px;
+        }
     }
 }

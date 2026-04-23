@@ -31,7 +31,7 @@ const initialState: WorkerState = {
   isLoading: false,
   error: null,
   tempPassword: null,
-  successMessage: null
+  successMessage: null,
 };
 
 export const createWorker = createAsyncThunk(
@@ -54,14 +54,17 @@ export const createWorker = createAsyncThunk(
         throw new Error("Требуется авторизация");
       }
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/workers/create-worker`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/workers/create-worker`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(workerData),
         },
-        body: JSON.stringify(workerData),
-      });
+      );
 
       const data = await response.json();
 
@@ -73,7 +76,46 @@ export const createWorker = createAsyncThunk(
 
       return data;
     } catch (error: any) {
-      return rejectWithValue(error.message || "Не удалось зарегистрировать работника");
+      return rejectWithValue(
+        error.message || "Не удалось зарегистрировать работника",
+      );
+    }
+  },
+);
+
+export const fetchAllWorkers = createAsyncThunk(
+  "worker/fetchAllWorkers",
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const state = getState() as RootState;
+      const token = state.auth.token;
+
+      if (!token) {
+        throw new Error("Требуется авторизация");
+      }
+
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/workers/all`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Не удалось загрузить список рабочих");
+      }
+
+      return data.data;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.message || "Не удалось загрузить список рабочих",
+      );
     }
   },
 );
@@ -86,17 +128,17 @@ const workerSlice = createSlice({
       state.error = null;
     },
     clearSuccessMessage: (state) => {
-      state.successMessage = null
+      state.successMessage = null;
     },
     clearTempPassword: (state) => {
-      state.tempPassword = null
+      state.tempPassword = null;
     },
     logoutWorker: (state) => {
-      state.currentWorker = null
-      state.token = null
-      localStorage.removeItem("workerToken")
-      localStorage.removeItem("token")
-    }
+      state.currentWorker = null;
+      state.token = null;
+      localStorage.removeItem("workerToken");
+      localStorage.removeItem("token");
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -105,11 +147,12 @@ const workerSlice = createSlice({
         state.isLoading = true;
         state.error = null;
         state.tempPassword = null;
-        state.successMessage = null
+        state.successMessage = null;
       })
       .addCase(createWorker.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.successMessage = action.payload.message || "Рабочий успешно создан";
+        state.successMessage =
+          action.payload.message || "Рабочий успешно создан";
 
         if (action.payload.data?.tempPassword) {
           state.tempPassword = action.payload.data.tempPassword;
@@ -132,19 +175,39 @@ const workerSlice = createSlice({
       })
       .addCase(createWorker.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string || "Не удалось создать работника";
+        state.error =
+          (action.payload as string) || "Не удалось создать работника";
+      })
+      .addCase(fetchAllWorkers.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchAllWorkers.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.workers = action.payload;
+      })
+      .addCase(fetchAllWorkers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
       });
   },
 });
 
+export const {
+  clearWorkerError,
+  clearSuccessMessage,
+  clearTempPassword,
+  logoutWorker,
+} = workerSlice.actions;
 
-export const { clearWorkerError, clearSuccessMessage, clearTempPassword, logoutWorker } = workerSlice.actions;
-
-export const selectWorkers = (state: RootState) => state.worker.workers
-export const selectCurrentWorker = (state: RootState) => state.worker.currentWorker
-export const selectWorkerToken = (state: RootState) => state.worker.token
-export const selectWorkerLoading  = (state: RootState) => state.worker.isLoading
-export const selectWorkerError  = (state: RootState) => state.worker.error
-export const selectWorkerTempPassword   = (state: RootState) => state.worker.tempPassword
+export const selectWorkers = (state: RootState) => state.worker.workers;
+export const selectCurrentWorker = (state: RootState) =>
+  state.worker.currentWorker;
+export const selectWorkerToken = (state: RootState) => state.worker.token;
+export const selectWorkerLoading = (state: RootState) => state.worker.isLoading;
+export const selectWorkerError = (state: RootState) => state.worker.error;
+export const selectWorkerTempPassword = (state: RootState) =>
+  state.worker.tempPassword;
+export const selectAllWorkers = (state: RootState) => state.worker.workers
 
 export default workerSlice.reducer;

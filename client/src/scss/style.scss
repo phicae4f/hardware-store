@@ -5,10 +5,6 @@
 @use "./global/container";
 @use "./global/visually-hidden";
 
-
-
-
-
 //BLOCKS
 @use "./blocks/tooltip";
 @use "./blocks/header";
@@ -27,8 +23,11 @@
 @use "./blocks/reviews-page";
 @use "./blocks/carousel";
 @use "./blocks/new-worker";
+@use "./blocks/worker-password";
+@use "./blocks/worker-applications";
+@use "./blocks/project-detail";
+@use "./blocks/admin-workers";
+@use "./blocks/admin-dashboard";
 @use "./blocks/footer";
-
-
 
 //VARIABLES

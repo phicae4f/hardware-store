@@ -1,9 +1,18 @@
 @use "../global/variables" as *;
+@use "../global/mixins" as *;
 
 .contact-us {
     margin: 0 auto;
     padding-top: 188px;
     $root: &;
+
+    @include vp-1023 {
+        padding-top: 140px;
+    }
+
+    @include vp-767 {
+        padding-top: 100px;
+    }
 
     &__wrapper {
         position: relative;
@@ -16,7 +25,14 @@
         min-height: 500px;
         border-radius: 5px;
         box-shadow: 1px 1px 32px 1px $color-silver;
-        
+
+        @include vp-1023 {
+            padding: 50px 60px;
+        }
+
+        @include vp-767 {
+            padding: 30px 20px;
+        }
 
         &::after {
             position: absolute;
@@ -28,6 +44,9 @@
             background-color: $color-moon-yellow;
             border-radius: 0 5px 5px 0;
 
+            @include vp-767 {
+                display: none;
+            }
         }
     }
 
@@ -35,18 +54,46 @@
         position: absolute;
         top: 10px;
         left: 10px;
+
+        @include vp-767 {
+            top: 5px;
+            left: 5px;
+            
+            svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
     }
 
     &__title {
         margin: 0;
         font-size: 32px;
         color: $color-dim-gray;
+
+        @include vp-1023 {
+            font-size: 28px;
+        }
+
+        @include vp-767 {
+            font-size: 24px;
+        }
     }
 
     &__text {
         margin: 0 0 30px;
         font-size: 26px;
         color: $color-dim-gray;
+
+        @include vp-1023 {
+            font-size: 22px;
+            margin: 0 0 20px;
+        }
+
+        @include vp-767 {
+            font-size: 18px;
+            margin: 0 0 15px;
+        }
     }
 
     &__form {
@@ -54,6 +101,16 @@
         flex-direction: column;
         gap: 30px;
         width: 40%;
+
+        @include vp-1023 {
+            width: 50%;
+            gap: 20px;
+        }
+
+        @include vp-767 {
+            width: 100%;
+            gap: 15px;
+        }
     }
 
     &__field {
@@ -71,8 +128,18 @@
         cursor: pointer;
         transition: color $transition-300;
 
+        @include vp-767 {
+            font-size: 16px;
+            padding: 8px;
+        }
+
         &:hover, &:focus-visible {
             color: $color-moon-yellow;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
     }
 
@@ -92,6 +159,22 @@
         align-items: flex-start;
         gap: 30px;
 
+        @include vp-1023 {
+            width: 45%;
+            padding: 30px;
+            gap: 20px;
+        }
+
+        @include vp-767 {
+            position: relative;
+            width: 100%;
+            transform: translateY(0);
+            top: 0;
+            margin-top: 30px;
+            padding: 20px;
+            gap: 15px;
+        }
+
         &::after {
             position: absolute;
             content: "";
@@ -100,6 +183,13 @@
             background-color: $color-moon-yellow;
             top: -20px;
             left: -20px;
+
+            @include vp-767 {
+                width: 30px;
+                height: 30px;
+                top: -10px;
+                left: -10px;
+            }
         }
     }
 
@@ -107,13 +197,21 @@
         color: $color-white;
         margin: 0;
         font-weight: 300;
+
+        @include vp-767 {
+            font-size: 20px;
+        }
     }
 
-    &__list  {
+    &__list {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
+
+        @include vp-767 {
+            gap: 15px;
+        }
     }
 
     &__item {
@@ -121,8 +219,14 @@
         align-items: center;
         gap: 10px;
         font-size: 20px;
+
+        @include vp-767 {
+            font-size: 14px;
+            gap: 8px;
+        }
+
         &:hover {
-            #{$root}__item-text,  #{$root}__item-link,  #{$root}__item-icon {
+            #{$root}__item-text, #{$root}__item-link, #{$root}__item-icon {
                 color: $color-white;
             }
         }
@@ -132,6 +236,13 @@
         display: flex;
         color: $color-silver;
         transition: color $transition-300;
+
+        @include vp-767 {
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
     }
 
     &__item-link {
@@ -142,6 +253,11 @@
         width: 100%;
         text-align: center;
         color: $color-persian-red;
+        font-size: 14px;
+
+        @include vp-767 {
+            font-size: 12px;
+        }
 
         &--success {
             color: $color-moon-yellow;
@@ -152,5 +268,12 @@
         position: absolute;
         font-size: 12px;
         color: $color-persian-red;
+        bottom: -18px;
+        left: 0;
+
+        @include vp-767 {
+            font-size: 10px;
+            bottom: -16px;
+        }
     }
 }

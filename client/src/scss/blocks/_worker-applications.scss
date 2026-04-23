@@ -1,0 +1,153 @@
+@use "../global/variables" as *;
+@use "../global/mixins" as *;
+
+.worker-applications {
+  padding-top: 190px;
+  min-height: 100vh;
+
+  @include vp-1023 {
+    padding-top: 140px;
+  }
+
+  @include vp-767 {
+    padding-top: 100px;
+  }
+
+  &__wrapper {
+    width: 100%;
+    padding: 20px 0;
+  }
+
+  &__title {
+    margin: 0 0 40px;
+    font-size: 48px;
+    font-weight: 300;
+    color: $color-nero;
+
+    @include vp-767 {
+      font-size: 32px;
+      margin-bottom: 25px;
+    }
+  }
+
+  &__error {
+    color: $color-persian-red;
+    padding: 20px;
+    background: rgba($color-persian-red, 0.1);
+    border-radius: 10px;
+  }
+
+  &__empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+  }
+
+  &__empty-text {
+    font-size: 24px;
+    color: $color-dim-gray;
+
+    @include vp-767 {
+      font-size: 18px;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 30px;
+
+    @include vp-767 {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+  &__card {
+    background: $color-white;
+    border-radius: 16px;
+    padding: 24px;
+    text-decoration: none;
+    transition: transform $transition-300, box-shadow $transition-300;
+    display: block;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  &__card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  &__card-id {
+    font-size: 14px;
+    color: $color-suva-grey;
+  }
+
+  &__status {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+
+    &--new {
+      background: rgba(#ff9800, 0.1);
+      color: #ff9800;
+    }
+
+    &--progress {
+      background: rgba(#2196f3, 0.1);
+      color: #2196f3;
+    }
+
+    &--completed {
+      background: rgba(#4caf50, 0.1);
+      color: #4caf50;
+    }
+  }
+
+  &__card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: $color-nero;
+    margin: 0 0 16px;
+  }
+
+  &__card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  &__card-row {
+    display: flex;
+    gap: 8px;
+    font-size: 14px;
+    color: $color-dim-gray;
+  }
+
+  &__card-label {
+    font-weight: 500;
+    color: $color-suva-grey;
+    min-width: 60px;
+  }
+
+  &__card-footer {
+    border-top: 1px solid $color-white-smoke;
+    padding-top: 16px;
+  }
+
+  &__card-link {
+    font-size: 14px;
+    color: $color-lightning-yellow;
+    font-weight: 500;
+  }
+}

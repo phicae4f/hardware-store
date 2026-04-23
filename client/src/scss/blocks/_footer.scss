@@ -7,7 +7,11 @@
   border-top: 1px solid rgba(255, 255, 255, 0.199);
 
   @include vp-1023 {
-    display: none;
+    display: block;
+  }
+
+  @include vp-767 {
+    display: block;
   }
 
   &__wrapper {
@@ -16,7 +20,21 @@
     display: flex;
     justify-content: space-between;
     gap: 50px;
-    align-items: center;
+    align-items: flex-start;
+
+    @include vp-1023 {
+      flex-wrap: wrap;
+      padding: 50px 0;
+      gap: 40px;
+    }
+
+    @include vp-767 {
+      flex-direction: column;
+      padding: 40px 0;
+      gap: 30px;
+      align-items: center;
+      text-align: center;
+    }
   }
 
   &__main {
@@ -25,12 +43,22 @@
     gap: 20px;
     align-items: flex-start;
     width: 300px;
+
+    @include vp-1023 {
+      width: 250px;
+    }
+
+    @include vp-767 {
+      width: 100%;
+      align-items: center;
+    }
   }
 
   &__guide-btn {
     background-color: transparent;
     padding: 0;
     border: 0;
+    cursor: pointer;
   }
 
   &__guide-logo {
@@ -41,7 +69,6 @@
     &:hover, &:focus-visible {
       color: $color-turbo;
     }
-    // margin: 0 0 0 auto;
   }
 
   &__logo-wrapper {
@@ -49,39 +76,76 @@
     align-items: center;
     gap: 20px;
     max-width: 263px;
+
+    @include vp-1023 {
+      max-width: 220px;
+    }
+
+    @include vp-767 {
+      justify-content: center;
+    }
   }
 
   &__logo-icon {
     color: $color-turbo;
+
+    @include vp-767 {
+      svg {
+        width: 50px;
+        height: 50px;
+      }
+    }
   }
 
   &__logo-title {
     font-size: 30px;
     font-weight: 800;
     color: $color-white;
+
+    @include vp-767 {
+      font-size: 24px;
+    }
   }
 
   &__logo-text {
     margin: 0;
     color: rgba(255, 255, 255, 0.466);
+    line-height: 1.4;
+
+    @include vp-767 {
+      font-size: 14px;
+      text-align: center;
+    }
   }
 
   &__services {
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    @include vp-767 {
+      align-items: center;
+    }
   }
 
   &__contact {
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    @include vp-767 {
+      align-items: center;
+    }
   }
 
   &__title {
     color: $color-white;
     margin: 0;
     font-size: 26px;
+
+    @include vp-767 {
+      font-size: 22px;
+    }
   }
 
   &__list {
@@ -89,9 +153,18 @@
     flex-direction: column;
     gap: 10px;
     list-style-type: none;
+
+    @include vp-767 {
+      align-items: center;
+    }
   }
 
   &__item {
     color: rgba(255, 255, 255, 0.466);
+
+    @include vp-767 {
+      font-size: 14px;
+      text-align: center;
+    }
   }
 }
