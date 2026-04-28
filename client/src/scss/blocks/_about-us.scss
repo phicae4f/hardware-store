@@ -66,17 +66,7 @@
     background-color: $color-moon-yellow;
 
     @include vp-1023 {
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: -20px;
-      width: 130px;
-      padding: 15px 20px;
-    }
-
-    @include vp-767 {
-      width: 120px;
-      padding: 10px 15px;
-      bottom: -15px;
+      display: none;
     }
   }
 

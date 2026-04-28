@@ -33,6 +33,11 @@
     padding: 24px;
     margin-bottom: 30px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    word-break: break-word;
+
+    @include vp-767 {
+      padding: 16px;
+    }
   }
 
   &__title {
@@ -40,30 +45,58 @@
     font-weight: 600;
     color: $color-nero;
     margin: 0 0 20px;
+    word-break: break-word;
+
+    @include vp-767 {
+      font-size: 24px;
+    }
   }
 
   &__info {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+
+    @include vp-767 {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
   }
 
   &__info-row {
     display: flex;
     gap: 10px;
     font-size: 14px;
+    flex-wrap: wrap;
+    word-break: break-word;
+
+    @include vp-767 {
+      font-size: 12px;
+      gap: 5px;
+    }
   }
 
   &__info-label {
     font-weight: 600;
     color: $color-suva-grey;
     min-width: 100px;
+    flex-shrink: 0;
+
+    @include vp-767 {
+      min-width: 80px;
+    }
   }
 
   &__status-badge {
     padding: 2px 8px;
     border-radius: 12px;
     font-size: 12px;
+    white-space: nowrap;
+
+    @include vp-767 {
+      white-space: normal;
+      font-size: 10px;
+    }
 
     &--new {
       background: rgba(#ff9800, 0.1);
@@ -84,12 +117,20 @@
     border-radius: 16px;
     padding: 24px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    @include vp-767 {
+      padding: 16px;
+    }
   }
 
   &__stages-title {
     font-size: 24px;
     font-weight: 500;
     margin: 0 0 20px;
+
+    @include vp-767 {
+      font-size: 20px;
+    }
   }
 
   &__stages-list {
@@ -102,6 +143,10 @@
     border: 1px solid $color-white-smoke;
     border-radius: 12px;
     padding: 20px;
+
+    @include vp-767 {
+      padding: 12px;
+    }
   }
 
   &__stage-header {
@@ -109,28 +154,49 @@
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   &__stage-left {
     flex: 1;
+    min-width: 0;
   }
 
   &__stage-title {
     font-size: 20px;
     font-weight: 500;
     margin: 0 0 8px;
+    word-break: break-word;
+
+    @include vp-767 {
+      font-size: 16px;
+    }
   }
 
   &__stage-description {
     font-size: 14px;
     color: $color-dim-gray;
     margin: 0;
+    word-break: break-word;
+
+    @include vp-767 {
+      font-size: 12px;
+    }
   }
 
   &__stage-status {
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    @include vp-767 {
+      white-space: normal;
+      font-size: 10px;
+      padding: 3px 8px;
+    }
 
     &--pending {
       background: rgba(#ff9800, 0.1);
@@ -151,10 +217,12 @@
     align-items: center;
     gap: 15px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
   }
 
   &__progress-bar {
     flex: 1;
+    min-width: 100px;
     height: 8px;
     background: $color-white-smoke;
     border-radius: 4px;
@@ -188,6 +256,11 @@
     font-size: 14px;
     background: $color-white;
     cursor: pointer;
+
+    @include vp-767 {
+      font-size: 12px;
+      padding: 6px 10px;
+    }
   }
 
   &__range {
@@ -199,6 +272,11 @@
     display: flex;
     gap: 10px;
     margin-top: 10px;
+    flex-wrap: wrap;
+
+    @include vp-767 {
+      flex-direction: column;
+    }
   }
 
   &__comment-input {
@@ -209,6 +287,11 @@
     font-family: $ff-play;
     font-size: 14px;
     resize: vertical;
+
+    @include vp-767 {
+      font-size: 12px;
+      padding: 8px;
+    }
   }
 
   &__comment-btn {
@@ -220,8 +303,13 @@
     cursor: pointer;
     transition: background 0.3s;
 
+    @include vp-767 {
+      padding: 8px 16px;
+      font-size: 12px;
+    }
+
     &:hover:not(:disabled) {
-      background: $color-lightning-yellow, 10%;
+      background: darken($color-lightning-yellow, 10%);
     }
 
     &:disabled {
@@ -241,11 +329,16 @@
     padding: 10px;
     border-radius: 8px;
     margin-bottom: 10px;
+    word-break: break-word;
   }
 
   &__comment-text {
     font-size: 14px;
     margin-bottom: 5px;
+
+    @include vp-767 {
+      font-size: 12px;
+    }
   }
 
   &__comment-date {
@@ -257,5 +350,6 @@
     text-align: center;
     color: $color-persian-red;
     padding: 40px;
+    word-break: break-word;
   }
 }
