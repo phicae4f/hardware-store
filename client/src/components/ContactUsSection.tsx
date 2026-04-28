@@ -199,7 +199,7 @@ export const ContactUsSection = () => {
                   className="contact-us__download-btn"
                   onClick={downloadDocument}
                 >
-                  <span className="contact-us__item-text">Скачать PDF "Свидетельство о допуске"</span>
+                  <span className="contact-us__item-text">Свидетельство о допуске к работе</span>
                 </button>
               </li>
             </ul>
