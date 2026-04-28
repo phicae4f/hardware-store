@@ -4,10 +4,11 @@ import { CustomSelect } from "../ui/CustomSelect";
 import { CustomTextArea } from "../ui/CustomTextArea";
 import { MdOutlineMailOutline, MdOutlinePhone } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
-import { FaRegClock } from "react-icons/fa";
+import { FaFileDownload, FaRegClock } from "react-icons/fa";
 import { useState } from "react";
 import { useAppSelector } from "../hooks/redux";
 import { useForm } from "react-hook-form";
+import { downloadDocument } from "../utils/downloadDocument";
 
 interface FormData {
   client_name: string;
@@ -189,6 +190,17 @@ export const ContactUsSection = () => {
                 <span className="contact-us__item-text">
                   09.00&nbsp;&mdash; 18.00
                 </span>
+              </li>
+              <li className="contact-us__item">
+                <span className="contact-us__item-icon">
+                  <FaFileDownload size={30}/>
+                </span>
+                  <button
+                  className="contact-us__download-btn"
+                  onClick={downloadDocument}
+                >
+                  <span className="contact-us__item-text">Скачать PDF "Свидетельство о допуске"</span>
+                </button>
               </li>
             </ul>
           </div>

@@ -245,6 +245,15 @@
         }
     }
 
+    &__download-btn {
+        background-color: transparent;
+        padding: 0;
+        border: 0;
+        font-family: $ff-play;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
     &__item-link {
         cursor: pointer;
     }
