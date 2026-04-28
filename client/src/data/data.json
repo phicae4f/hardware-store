@@ -1,0 +1,76 @@
+[
+  {
+    "id": 1,
+    "imgSrc": "/img/equipment/1.jpg",
+    "title": "Автокран Ивановец КС-45717К-1",
+    "loadCapacity": "25 т",
+    "arrowLength": "28 м + гусёк 9 м",
+    "amount": "2 единицы"
+  },
+  {
+    "id": 2,
+    "imgSrc": "/img/equipment/2.jpg",
+    "title": "Автокран ХСМG",
+    "loadCapacity": "30 т",
+    "arrowLength": "43 м + гусёк 9 м",
+    "vacuumGrasp": "до 500 кг",
+    "amount": "1 единица"
+  },
+  {
+    "id": 3,
+    "imgSrc": "/img/equipment/3.jpg",
+    "title": "Самосвал Shacman",
+    "loadCapacity": "40 т",
+    "bodyworkVolume": "35 м3",
+    "amount": "2 единицы"
+  },
+  {
+    "id": 4,
+    "imgSrc": "/img/equipment/4.jpg",
+    "title": "Экскаватор-погрузчик CASE 695 ST",
+    "frontBucket": "1.3 м3",
+    "backBucket": "0.25 м3",
+    "diggingDepth": "6 м",
+    "hydraulicHammer": "1200 Дж",
+    "amount": "2 единицы"
+  },
+  {
+    "id": 5,
+    "imgSrc": "/img/equipment/5.jpg",
+    "title": "Манипулятор МАЗ-65012j-8550-000",
+    "KMY": "Kanglim 1256Gil",
+    "carLoadCapacity": "12 т",
+    "installationLoadCapacity": "7 т",
+    "arrowLength": "19 м",
+    "liftHeight": "23 м",
+    "amount": "2 единицы"
+  },
+  {
+    "id": 6,
+    "imgSrc": "/img/equipment/6.jpg",
+    "title": "Колёсный мини-погрузчик SUNWARD",
+    "volumeBucket": "0.8 м3",
+    "loadCapacity": "1600 кг",
+    "dischargeHeight": "2800 мм",
+    "removable": true,
+    "amount": "2 единицы"
+  },
+  {
+    "id": 7,
+    "imgSrc": "/img/equipment/7.jpg",
+    "title": "Manitou MRT 2150",
+    "type": "телескопический полноповоротный",
+    "loadCapacity": "5 т",
+    "liftHeight": "21 м",
+    "amount": "1 единица"
+  },
+  {
+    "id": 8,
+    "imgSrc": "/img/equipment/8.jpg",
+    "title": "JCB JS 330 LC",
+    "type": "гусеничный экскаватор",
+    "bucket": "2 м3",
+    "hydraulicHammer": "3200 Дж",
+    "amount": "1 единица"
+  }
+]

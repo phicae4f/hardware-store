@@ -1,10 +1,10 @@
 import { GrLogin } from "react-icons/gr";
-import { GoTools } from "react-icons/go";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux";
 import { DropDown } from "./Dropdown";
 import { scrollToSection } from "../utils/scrollToSection";
 import { useState, useEffect, useRef } from "react";
+import { MdOutlineMapsHomeWork } from "react-icons/md";
 
 export const Header = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -70,7 +70,7 @@ export const Header = () => {
           <Link to="/" onClick={closeMenu}>
             <div className="header__logo" aria-label="Логотип компании">
               <span className="header__logo-icon">
-                <GoTools size={60} />
+                <MdOutlineMapsHomeWork size={80} />
               </span>
               <div className="header__logo-text">
                 <span>БАРС-В</span>
@@ -89,12 +89,40 @@ export const Header = () => {
             <span className="header__burger-line"></span>
             <span className="header__burger-line"></span>
           </button>
-          <ul ref={navRef} className={`header__nav ${isBurgerActive ? "header__nav--active" : ""}`}>
-            <li className="header__nav-item" onClick={() => handleNavigation("about-us")}>О нас</li>
-            <li className="header__nav-item" onClick={() => handleNavigation("repair")}>Ремонт</li>
-            <li className="header__nav-item" onClick={() => handleNavigation("building")}>Строительство</li>
-            <li className="header__nav-item" onClick={() => handleNavigation("design")}>Дизайн</li>
-            <li className="header__nav-item" onClick={() => handleNavigation("contact-us")}>Связаться с нами</li>
+          <ul
+            ref={navRef}
+            className={`header__nav ${isBurgerActive ? "header__nav--active" : ""}`}
+          >
+            <li
+              className="header__nav-item"
+              onClick={() => handleNavigation("about-us")}
+            >
+              О нас
+            </li>
+            <li
+              className="header__nav-item"
+              onClick={() => handleNavigation("services")}
+            >
+              Компетенции
+            </li>
+            <li
+              className="header__nav-item"
+              onClick={() => handleNavigation("equipment")}
+            >
+              Оборудование
+            </li>
+            <li
+              className="header__nav-item"
+              onClick={() => handleNavigation("projects")}
+            >
+              Наши работы
+            </li>
+            <li
+              className="header__nav-item"
+              onClick={() => handleNavigation("contact-us")}
+            >
+              Контакты
+            </li>
           </ul>
           {user ? (
             <DropDown />

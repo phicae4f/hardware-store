@@ -1,0 +1,77 @@
+@use "../global/variables" as *;
+@use "../global/mixins" as *;
+
+.number {
+  position: relative;
+  width: auto;
+  margin: 0 auto;
+  background-color: $color-moon-yellow;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 20px 70px;
+  border-radius: 20px;
+  border: 3px solid transparent;
+  transition:
+    background-color $transition-300,
+    border $transition-300;
+  cursor: pointer;
+
+  &:hover,
+  &:focus,
+  &:focus-visible {
+    background-color: transparent;
+    border: 3px solid $color-moon-yellow;
+
+    .number__icon,
+    .number__phone {
+      color: $color-moon-yellow;
+    }
+  }
+
+  @include vp-1023 {
+    padding: 15px 50px;
+    gap: 20px;
+
+    .number__phone {
+      font-size: 22px;
+    }
+  }
+
+  @include vp-767 {
+    padding: 12px 30px;
+    gap: 15px;
+
+    .number__icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .number__phone {
+      font-size: 18px;
+    }
+  }
+
+  &__icon,
+  &__phone {
+    color: $color-white;
+    transition: color $transition-300;
+  }
+
+  &__phone {
+    display: flex;
+    font-family: $ff-play;
+    font-size: 26px;
+    font-weight: 900;
+
+    &::after {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+    }
+  }
+}

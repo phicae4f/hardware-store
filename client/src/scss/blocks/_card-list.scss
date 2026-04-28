@@ -1,0 +1,22 @@
+@use "../global/variables" as *;
+@use "../global/mixins" as *;
+
+.card-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  &__item {
+    width: calc(100% / 4 - 15px);
+    border-radius: 10px;
+
+    @include vp-1023 {
+      width: calc(100% / 2 - 10px);
+    }
+
+    @include vp-767 {
+      width: 100%;
+    }
+  }
+}

@@ -10,13 +10,16 @@ export const HeroSection = () => {
             </span>
           </h1>
           <p className="hero__text">
-            Предоставляем услуги строительства для Ваших задумок и&nbsp;воплощаем
-            их&nbsp;в&nbsp;реальность с&nbsp;высокой точностью и&nbsp;качеством
-            изготовления.
+            Ваш надёжный партнёр в&nbsp;строительстве. Проектируем, строим,
+            сдаём&nbsp;&mdash; от&nbsp;нулевого цикла до&nbsp;чистовой отделки.
           </p>
           <div className="hero__links">
-            <a className="hero__link hero__link--color" href="#contact-us">Заказать консультацию</a>
-            <a className="hero__link" href="#about-us">Подробнее</a>
+            <a className="hero__link hero__link--color" href="#contact-us">
+              Заказать консультацию
+            </a>
+            <a className="hero__link" href="#about-us">
+              Подробнее
+            </a>
           </div>
         </div>
       </div>

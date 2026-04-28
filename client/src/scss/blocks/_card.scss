@@ -1,0 +1,231 @@
+@use "../global/variables" as *;
+@use "../global/mixins" as *;
+
+.card {
+  border-radius: 10px;
+  border: 2px solid $color-turbo;
+  background-color: $color-white;
+  padding: 15px 15px;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-between;
+  background-color: transparent;
+  transition:
+    box-shadow $transition-300,
+    border $transition-300;
+  box-shadow: none;
+
+  &:hover,
+  &:focus,
+  &:focus-visible {
+    box-shadow: 0 10px 20px -5px $color-moon-yellow;
+    border: 2px solid $color-moon-yellow;
+
+    .card__amount {
+      color: $color-moon-yellow;
+      background-color: transparent;
+      border: 2px solid $color-moon-yellow;
+    }
+  }
+
+  @include vp-1023 {
+    padding: 12px;
+    gap: 15px;
+  }
+
+  @include vp-767 {
+    padding: 10px;
+    gap: 12px;
+  }
+
+  &__img-wrapper {
+    width: 100%;
+    min-height: 310px;
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    position: relative;
+
+    &::after {
+      position: absolute;
+      content: "";
+      left: 0;
+      bottom: -15px;
+      height: 5px;
+      width: 100%;
+      background-color: $color-oasis;
+    }
+
+    @include vp-1023 {
+      min-height: 260px;
+    }
+
+    @include vp-767 {
+      min-height: 220px;
+    }
+  }
+
+  &__img {
+    width: 100%;
+    min-height: 240px;
+    border-radius: 10px 10px 10px 10px;
+    border: 2px solid $color-moon-yellow;
+
+    @include vp-1023 {
+      min-height: 200px;
+    }
+
+    @include vp-767 {
+      min-height: 180px;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    color: $color-turbo;
+    font-size: 26px;
+    text-align: left;
+
+    @include vp-1023 {
+      font-size: 22px;
+    }
+
+    @include vp-767 {
+      font-size: 20px;
+    }
+  }
+
+  &__info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 30px;
+
+    @include vp-1023 {
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    @include vp-767 {
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+  }
+
+  &__info-item {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+
+    &::after {
+      position: absolute;
+      content: "";
+      left: 0;
+      width: 100%;
+      bottom: -10px;
+      border-bottom: 2px dashed $color-white-smoke;
+    }
+
+    &--removable {
+      margin-top: 15px;
+      position: relative;
+      background-color: $color-turbo;
+      padding: 10px 15px 10px 35px;
+      border-radius: 30px;
+
+      .card__info-item-text {
+        width: 100%;
+        z-index: 10;
+        color: $color-turbo;
+
+        & svg {
+          position: absolute;
+          left: 13px;
+          top: 18px;
+        }
+      }
+
+      &::after {
+        position: absolute;
+        content: "";
+        left: 10px;
+        width: 97%;
+        height: 100%;
+        bottom: 0;
+        border-bottom: none;
+        background-color: $color-oasis;
+        border-radius: 30px;
+      }
+    }
+
+    @include vp-767 {
+      &--removable {
+        padding: 8px 12px 8px 30px;
+
+        .card__info-item-text svg {
+          left: 10px;
+          top: 14px;
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+
+  &__info-item-text {
+    font-size: 22px;
+    color: $color-dim-gray;
+
+    &--bold {
+      color: $color-turbo;
+      font-weight: 900;
+    }
+
+    @include vp-1023 {
+      font-size: 18px;
+    }
+
+    @include vp-767 {
+      font-size: 14px;
+    }
+  }
+
+  &__amount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 10px 15px;
+    border-radius: 25px;
+    width: auto;
+    background-color: $color-oasis;
+    border: 2px solid transparent;
+    color: $color-turbo;
+    font-size: 20px;
+    font-weight: 900;
+    transition:
+      color $transition-300,
+      background-color $transition-300,
+      border $transition-300;
+
+    @include vp-1023 {
+      font-size: 18px;
+      padding: 8px 12px;
+    }
+
+    @include vp-767 {
+      font-size: 16px;
+      padding: 6px 10px;
+    }
+  }
+}
