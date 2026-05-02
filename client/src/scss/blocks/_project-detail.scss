@@ -309,7 +309,7 @@
     }
 
     &:hover:not(:disabled) {
-      background: darken($color-lightning-yellow, 10%);
+      background: $color-lightning-yellow;
     }
 
     &:disabled {

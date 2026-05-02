@@ -3,7 +3,7 @@
 
 .card {
   border-radius: 10px;
-  border: 2px solid $color-turbo;
+  border: 2px solid $color-suva-grey;
   background-color: $color-white;
   padding: 15px 15px;
   display: flex;
@@ -88,7 +88,7 @@
 
   &__title {
     margin: 0;
-    color: $color-turbo;
+    color: $color-suva-grey;
     font-size: 26px;
     text-align: left;
 
@@ -139,14 +139,14 @@
     &--removable {
       margin-top: 15px;
       position: relative;
-      background-color: $color-turbo;
+      background-color: $color-suva-grey;
       padding: 10px 15px 10px 35px;
       border-radius: 30px;
 
       .card__info-item-text {
         width: 100%;
         z-index: 10;
-        color: $color-turbo;
+        color: $color-suva-grey;
 
         & svg {
           position: absolute;
@@ -187,7 +187,7 @@
     color: $color-dim-gray;
 
     &--bold {
-      color: $color-turbo;
+      color: $color-suva-grey;
       font-weight: 900;
     }
 
@@ -210,7 +210,7 @@
     width: auto;
     background-color: $color-oasis;
     border: 2px solid transparent;
-    color: $color-turbo;
+    color: $color-suva-grey;
     font-size: 20px;
     font-weight: 900;
     transition:
