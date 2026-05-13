@@ -71,6 +71,7 @@
         display: flex;
         gap: 30px;
         align-items: center;
+        justify-content: center;
         width: 100%;
 
         @include vp-767 {
@@ -84,6 +85,7 @@
         padding: 0;
         cursor: pointer;
         transition: color $transition-300;
+        flex-shrink: 0;
 
         &:hover, &:focus-visible {
             color: $color-turbo;
@@ -103,10 +105,12 @@
         flex-direction: column;
         gap: 20px;
         align-items: center;
+        max-width: 700px;
     }
 
     &__list {
         display: flex;
+        justify-content: center;
         width: 100%;
     }
 
@@ -114,7 +118,7 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
-        align-items: flex-start;
+        align-items: center;
         justify-content: space-between;
         min-height: 236px;
         background-color: $color-white;
@@ -123,6 +127,7 @@
         width: 650px;
         max-width: 100%;
         box-shadow: 1px 1px 32px 1px $color-silver;
+        margin: 0 auto;
 
         @include vp-1023 {
             width: 500px;
@@ -163,7 +168,7 @@
     &__text {
         font-size: 18px;
         line-height: 22px;
-        text-align: left;
+        text-align: center;
         color: $color-dim-gray;
         margin: 0;
 
@@ -176,15 +181,18 @@
     &__user {
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
         max-width: 150px;
         gap: 10px;
         align-items: center;
+        margin: 0 auto;
     }
 
     &__indicators {
         max-width: 100%;
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
         gap: 10px;
     }
 
